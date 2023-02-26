@@ -15,5 +15,10 @@ declare interface IProduct {
     images: IImageProduct;
 }
 
+declare interface ILayout {
+    children?: ReactNode
+    // any props that come into the component
+}
+
 // Картинки продукта
 declare type IImageProduct = string[]

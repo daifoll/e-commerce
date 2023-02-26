@@ -1,3 +1,4 @@
+import Layout from "@/components/Layout"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
 
 
@@ -6,22 +7,24 @@ export default function Home({ products }: InferGetStaticPropsType<typeof getSta
   console.log(products)
 
   return (
-    <div className="flex flex-wrap">
-      {
-        products.map((product: IProduct) =>
-          <div className="flex flex-col items-center basis-1/3" key={product.id}>
-            <div className="w-full">
-              <img className="w-full h-64 object-cover" src={product.images[2]} />
+    <Layout>
+      <div className="flex flex-wrap w-full mx-auto">
+        {
+          products.map((product: IProduct) =>
+            <div className="flex flex-col items-center basis-1/3" key={product.id}>
+              <div className="w-full">
+                <img className="w-full h-64 object-cover" src={product.images[2]} />
+              </div>
+              <span>{product.category.name}</span>
+              <strong>{product.title}</strong>
+              <p>{product.description}</p>
+              <button>BUY</button>
+              <button>ADD TO CART</button>
             </div>
-            <span>{product.category.name}</span>
-            <strong>{product.title}</strong>
-            <p>{product.description}</p>
-            <button>BUY</button>
-            <button>ADD TO CART</button>
-          </div>
-        )
-      }
-    </div>
+          )
+        }
+      </div>
+    </Layout>
   )
 }
 
