@@ -1,33 +1,17 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next"
 
-interface ICategory {
-  id: number;
-  name: string;
-  image: string;
-}
-
-type IImageProduct = string[]
-
-interface IProduct {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: ICategory;
-  images: IImageProduct;
-}
 
 export default function Home({ products }: InferGetStaticPropsType<typeof getStaticProps>) {
 
   console.log(products)
 
   return (
-    <div>
-      {/* {
+    <div className="flex flex-wrap">
+      {
         products.map((product: IProduct) =>
-          <div key={product.id}>
-            <div>
-              <img src={product.images[2]} />
+          <div className="flex flex-col items-center basis-1/3" key={product.id}>
+            <div className="w-full">
+              <img className="w-full h-64 object-cover" src={product.images[2]} />
             </div>
             <span>{product.category.name}</span>
             <strong>{product.title}</strong>
@@ -36,7 +20,7 @@ export default function Home({ products }: InferGetStaticPropsType<typeof getSta
             <button>ADD TO CART</button>
           </div>
         )
-      } */}
+      }
     </div>
   )
 }
