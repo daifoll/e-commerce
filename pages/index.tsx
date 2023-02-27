@@ -1,13 +1,32 @@
 import Layout from "@/components/Layout"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
 import Link from "next/link"
+import Router, { useRouter } from "next/router"
+import { ChangeEvent, FormEvent, useState } from "react"
 
 
 export default function Home({ categories }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter()
 
+  const [byTitle, setByTitle] = useState('')
+
+  function handleSubmitSearch(event: FormEvent) {
+    event.preventDefault()
+
+    Router.push({
+      pathname: `/search`,
+      query: { byTitle, page: '0' }
+    })
+
+    // router.push(`search/${searchQuery}`)
+  }
   return (
     <Layout>
-      <input placeholder="Найти товар"/>
+      <form onSubmit={handleSubmitSearch} >
+        <input value={byTitle} onChange={(e) => setByTitle(e.target.value)} placeholder="Найти товар" />
+        <button type="submit">НАЙТИ</button>
+        <input type='submit' value='send' />
+      </form>
 
       <h1>Выберите категорию</h1>
       <div className="flex flex-wrap">
