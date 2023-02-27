@@ -2,20 +2,24 @@ import Layout from "@/components/Layout"
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { SyntheticEvent, useEffect, useState } from "react"
 
 
 export default function Search({ searchedProducts, allProductsBySearch }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const router = useRouter()
     const byTitle = Object.entries(router.query)[0]
     const pageArr = Object.entries(router.query)[1]
-    
+
+    function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
+        e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
+    }
+
     // console.log(byTitle, pageArr)
     console.log('Выводится на страницу', searchedProducts, 'Всего найдено:', allProductsBySearch)
 
 
     const [pageCount, setPageCount] = useState<number[]>([])
-    
+
     useEffect(() => {
 
         const pagesCountNum = Math.round(allProductsBySearch.length / 10)
@@ -39,7 +43,7 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
                     <div key={product.id}>
                         <div className="flex basis-1/3" key={product.id}>
                             <div className="w-80">
-                                <img className="w-full h-64 object-cover" src={product.images[0]} />
+                                <img className="w-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)}/>
                             </div>
                             <div>
                                 <div><span>{product.category.name}</span></div>
@@ -65,11 +69,11 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
 export const getServerSideProps: GetServerSideProps<{ searchedProducts: IProduct[], allProductsBySearch: IProduct[] }> = async (context) => {
     const allProductsBySearchRes = await fetch(`https://api.escuelajs.co/api/v1/products/?title=${context.query.byTitle}`)
     const allProductsBySearch: IProduct[] = await allProductsBySearchRes.json()
-    
+
     const searchProdByTitleRes = await fetch(`https://api.escuelajs.co/api/v1/products/?title=${context.query.byTitle}&offset=${context.query.page}0&limit=10`)
     const searchedProducts: IProduct[] = await searchProdByTitleRes.json()
-    
+
     return {
-        props: { searchedProducts, allProductsBySearch}
+        props: { searchedProducts, allProductsBySearch }
     }
 }

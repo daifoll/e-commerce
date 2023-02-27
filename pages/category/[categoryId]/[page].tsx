@@ -2,10 +2,14 @@ import Layout from "@/components/Layout"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { SyntheticEvent, useEffect, useState } from "react"
 
 export default function Category({ categoryProducts, catId }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()
+
+    function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
+        e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
+    }
 
     const [pageCount, setPageCount] = useState<number[]>([])
 
@@ -37,7 +41,7 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                         <div key={product.id}>
                             <div className="flex basis-1/3" key={product.id}>
                                 <div className="w-80">
-                                    <img className="w-full h-64 object-cover" src={product.images[0]} />
+                                    <img className="w-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)}/>
                                 </div>
                                 <div>
                                     <div><span>{product.category.name}</span></div>
