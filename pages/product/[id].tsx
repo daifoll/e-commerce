@@ -1,5 +1,6 @@
 import Layout from '@/components/Layout'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -15,7 +16,7 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
                         <img className="basis-1/2 w-20 h-40 object-cover" src={product.images[2]} />
                     </div>
                     <div>
-                        <div><span>{product.category.name}</span></div>
+                        <div><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
                         <div><strong>{product.title}</strong></div>
                         <p>{product.description}</p>
                         <button>BUY</button>

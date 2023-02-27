@@ -7,6 +7,8 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
 
   return (
     <Layout>
+      <input placeholder="Найти товар"/>
+
       <h1>Выберите категорию</h1>
       <div className="flex flex-wrap">
         {
