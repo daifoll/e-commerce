@@ -28,19 +28,16 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
 }
 
 
-// This function gets called at build time
+
 export async function getStaticPaths() {
-    // Call an external API endpoint to get posts
     const res = await fetch('https://api.escuelajs.co/api/v1/products')
     const products = await res.json()
 
-    // Get the paths we want to pre-render based on posts
+
     const paths = products.map((product: IProduct) => ({
         params: { id: product.id.toString() },
     }))
 
-    // We'll pre-render only these paths at build time.
-    // { fallback: false } means other routes should 404.
     return { paths, fallback: false }
 }
 

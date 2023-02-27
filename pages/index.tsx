@@ -1,25 +1,21 @@
 import Layout from "@/components/Layout"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
+import Link from "next/link"
 
 
-export default function Home({ products }: InferGetStaticPropsType<typeof getStaticProps>) {
-
-  console.log(products)
+export default function Home({ categories }: InferGetStaticPropsType<typeof getStaticProps>) {
 
   return (
     <Layout>
-      <div className="flex flex-wrap w-full mx-auto">
+      <h1>Выберите категорию</h1>
+      <div className="flex flex-wrap">
         {
-          products.map((product: IProduct) =>
-            <div className="flex flex-col items-center basis-1/3" key={product.id}>
+          categories.map((cat: ICategory) =>
+            <div key={cat.id} className="basis-full">
+              <Link href={`/category/${cat.id}/1`}><strong className="uppercase">{cat.name}</strong></Link>
               <div className="w-full">
-                <img className="w-full h-64 object-cover" src={product.images[2]} />
+                <img className="w-full h-64 object-cover" src={cat.image} alt={cat.name} />
               </div>
-              <span>{product.category.name}</span>
-              <strong>{product.title}</strong>
-              <p>{product.description}</p>
-              <button>BUY</button>
-              <button>ADD TO CART</button>
             </div>
           )
         }
@@ -29,11 +25,11 @@ export default function Home({ products }: InferGetStaticPropsType<typeof getSta
 }
 
 
-export const getStaticProps: GetStaticProps<{ products: IProduct[] }> = async () => {
-  const res = await fetch(`https://api.escuelajs.co/api/v1/products?offset=0&limit=10`)
-  const products = await res.json()
+export const getStaticProps: GetStaticProps<{ categories: ICategory[] }> = async () => {
+  const catRes = await fetch(`https://api.escuelajs.co/api/v1/categories`)
+  const categories = await catRes.json()
 
   return {
-    props: { products }
+    props: { categories }
   }
 }
