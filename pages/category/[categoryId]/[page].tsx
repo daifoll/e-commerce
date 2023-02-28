@@ -7,11 +7,16 @@ import { SyntheticEvent, useEffect, useState } from "react"
 export default function Category({ categoryProducts, catId }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()
 
+    
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
         e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
     }
-
+    
     const [pageCount, setPageCount] = useState<number[]>([])
+    
+    const categoryPageCountPath = `/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1}`
+    const categoryPageNextBtnPath = `/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1}`
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,11 +40,11 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
 
     return (
         <Layout>
-            <div>
+            <div className="flex flex-wrap">
                 {
                     categoryProducts.map((product: IProduct) =>
-                        <div key={product.id}>
-                            <div className="flex basis-1/3" key={product.id}>
+                        <div key={product.id} className="basis-1/3">
+                            <div key={product.id} className="flex flex-col items-center mb-10">
                                 <div className="w-80">
                                     <img className="w-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
                                 </div>
@@ -55,14 +60,17 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                     )
                 }
 
+            </div>
+
+            <div className="pt-9">
                 {
                     pageCount.map(page => {
-                        return <Link key={page} className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/category/${catId}/${page === 0 ? 1 : page}`}>{page + 1}</Link>
+                        return <Link key={page} className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageCountPath}>{page + 1}</Link>
                     })
 
                 }
 
-                <Link className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1 }`}>Следующая страница {Number(router.query.page) + 1 > pageCount.length - 1 ? '(вернуться на первую страницу)': null}</Link>
+                <Link className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageNextBtnPath}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
             </div>
         </Layout>
     )
