@@ -35,7 +35,7 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
       <h1>Выберите категорию</h1>
       <div className="flex flex-wrap">
         {
-          categories.map((cat: ICategory) =>
+          categories.map((cat: ICategory, index) =>
             <div key={cat.id} className="basis-full">
               <Link href={`/category/${cat.id}/1`}><strong className="uppercase">{cat.name}</strong></Link>
               <div className="w-full">

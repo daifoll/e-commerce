@@ -41,7 +41,7 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                         <div key={product.id}>
                             <div className="flex basis-1/3" key={product.id}>
                                 <div className="w-80">
-                                    <img className="w-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)}/>
+                                    <img className="w-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
                                 </div>
                                 <div>
                                     <div><span>{product.category.name}</span></div>
@@ -59,7 +59,10 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                     pageCount.map(page => {
                         return <Link key={page} className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/category/${catId}/${page === 0 ? 1 : page}`}>{page + 1}</Link>
                     })
+
                 }
+
+                <Link className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1 }`}>Следующая страница {Number(router.query.page) + 1 > pageCount.length - 1 ? '(вернуться на первую страницу)': null}</Link>
             </div>
         </Layout>
     )
@@ -72,7 +75,7 @@ export async function getStaticPaths() {
 
     const paths = categories.flatMap((category: ICategory) => {
         const categoryPages = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        
+
         return categoryPages.map(page => ({
             params: {
                 categoryId: category.id.toString(),
