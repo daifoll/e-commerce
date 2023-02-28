@@ -28,8 +28,7 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
     <Layout>
       <form onSubmit={handleSubmitSearch} >
         <input value={byTitle} onChange={(e) => setByTitle(e.target.value)} placeholder="Найти товар" />
-        <button type="submit">НАЙТИ</button>
-        <input type='submit' value='send' />
+        <button type="submit" className="uppercase">Найти</button>
       </form>
 
       <h1>Выберите категорию</h1>
