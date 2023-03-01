@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout"
+import SearchForm from "@/components/SearchForm"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
 import Link from "next/link"
 import Router, { useRouter } from "next/router"
@@ -12,25 +13,9 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
     e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
   }
 
-  const [byTitle, setByTitle] = useState('')
-
-  function handleSubmitSearch(event: FormEvent) {
-    event.preventDefault()
-
-    Router.push({
-      pathname: `/search`,
-      query: { byTitle, page: '0' }
-    })
-
-    // router.push(`search/${searchQuery}`)
-  }
   return (
     <Layout>
-      <form onSubmit={handleSubmitSearch} >
-        <input value={byTitle} onChange={(e) => setByTitle(e.target.value)} placeholder="Найти товар" />
-        <button type="submit" className="uppercase">Найти</button>
-      </form>
-
+      <SearchForm/>
       <h1>Выберите категорию</h1>
       <div className="flex flex-wrap">
         {

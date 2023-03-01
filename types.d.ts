@@ -15,9 +15,14 @@ declare interface IProduct {
     images: IImageProduct;
 }
 
+// Общий макет (Layout)
 declare interface ILayout {
     children?: ReactNode
-    // any props that come into the component
+}
+
+// Форма поиска
+declare interface ISearchForm {
+    handleSubmitSearch(event: FormEvent): void
 }
 
 // Картинки продукта
