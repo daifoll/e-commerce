@@ -16,8 +16,8 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
   return (
     <Layout>
       <SearchForm/>
-      <h1>Выберите категорию</h1>
-      <div className="flex flex-wrap">
+      <h1 className="text-3xl font-medium uppercase mt-20">Выберите категорию</h1>
+      <div className="flex flex-wrap mt-10">
         {
           categories.map((cat: ICategory, index) =>
             <div key={cat.id} className="basis-full">
