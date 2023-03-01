@@ -87,7 +87,7 @@ export async function getStaticPaths() {
     const res = await fetch('https://api.escuelajs.co/api/v1/categories')
     const categories = await res.json()
 
-    const paths = categories.flatMap((category: ICategory) => {
+    const paths = categories.flatMap((category: ICategory, index: number) => {
         const categoryPages = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
         return categoryPages.map(page => ({
