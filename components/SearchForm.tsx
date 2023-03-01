@@ -13,9 +13,33 @@ export default function SearchForm() {
         })
     }
     return (
-        <form onSubmit={handleSubmitSearch} >
-            <input value={byTitle} onChange={(e) => setByTitle(e.target.value)} placeholder="Найти товар" />
-            <button type="submit" className="uppercase">Найти</button>
-        </form>
+        <div className="max-w-full flex mt-2">
+            <form onSubmit={handleSubmitSearch} className="w-full flex" >
+                <input
+                    value={byTitle}
+                    onChange={(e) => setByTitle(e.target.value)}
+                    placeholder="Найти товар"
+                    className="
+                        basis-11/12
+                        h-16
+                        text-2xl
+                        border-yellow-300
+                        border-2
+                    "
+                />
+                <button
+                    type="submit"
+                    className="
+                        uppercase
+                        grow
+                        text-xl
+                        font-medium
+                        bg-amber-300
+                        hover:text-stone-50
+                    ">
+                    Поиск
+                </button>
+            </form>
+        </div>
     )
 }
