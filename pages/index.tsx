@@ -10,16 +10,21 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
   const router = useRouter()
 
   function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>, catName: string) {
-    switch (catName.toLocaleLowerCase()) {
+    console.log(catName)
+    switch (`${catName.toLowerCase()}`) {
       case 'clothes':
-        e.currentTarget.src = './stubimg/clothes.jpg'
+        e.currentTarget.src = '/stubimg/clothes.jpg'
         break
       case 'shoes':
-        e.currentTarget.src = './stubimg/shoes.jpg'
+        e.currentTarget.src = '/stubimg/shoes.jpg'
+        break
+      case 'electronics':
+        e.currentTarget.src = '/stubimg/electronics.jpg'
         break
       default:
         e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
-    }
+        break
+      }
 
   }
 
@@ -33,7 +38,7 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
             <div key={cat.id} className="basis-1/2 p-1 mt-5">
               <Link href={`/category/${cat.id}/1`}><strong className="uppercase">{cat.name}</strong></Link>
               <div className="w-full flex overflow-hidden">
-                <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/1`}><img className="w-full h-64 object-cover" src={cat.image} onError={(e) => hanlerOnErrorImage(e, cat.name)} alt={cat.name} /></Link>
+                <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/1`}><img className="w-full h-64 object-cover" src={'/asdasd'} onError={(e) => hanlerOnErrorImage(e, cat.name)} alt={cat.name} /></Link>
               </div>
             </div>
           )
