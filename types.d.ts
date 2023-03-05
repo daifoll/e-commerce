@@ -46,7 +46,14 @@ declare interface IProductAction {
     image: string;
     quantity: number;
 }
+
+// Action (redux) для функций увлеичения и уменьшения кол-ва товара
 declare interface IProductActionCount {
+    id: number;
+}
+
+// Action (redux) для удаления товара
+declare interface IProductActionDelete {
     id: number;
 }
 

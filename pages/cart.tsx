@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import { decrementQuantityCount, incrementQuantityCount } from "@/store/slices/cartSlice";
+import { decrementQuantityCount, deleteProduct, incrementQuantityCount } from "@/store/slices/cartSlice";
 import { useSelector, useDispatch } from 'react-redux'
 
 export default function Cart() {
@@ -13,6 +13,9 @@ export default function Cart() {
     }
     function handleClickDecrementQuantity(product: IProductActionCount) {
         dispatch(decrementQuantityCount({id: product.id}))
+    }
+    function handleClickDeleteProduct(product: IProductActionDelete) {
+        dispatch(deleteProduct({id: product.id}))
     }
     
     return (
@@ -32,6 +35,7 @@ export default function Cart() {
                                     {product.quantity}
                                     <button onClick={() => handleClickIncrementQuantity(product)} className="text-xl">+</button><br/>
                                     <strong>{product.price}$</strong>
+                                    <button onClick={() => handleClickDeleteProduct(product)}>Удалить из корзины</button>
                                 </div>
                             </div>
                         </li>
