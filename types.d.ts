@@ -44,6 +44,7 @@ declare interface IProductAction {
     title: string;
     price: number;
     image: string;
+    quantity: number;
 }
 
 // Картинки продукта

@@ -12,7 +12,7 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
     console.log(cartProducts)
 
     function handleClickAddToCart(){
-        dispatch(addToCart({id: product.id, title: product.title, price: product.price, image: product.images[0]}))
+        dispatch(addToCart({id: product.id, title: product.title, price: product.price, image: product.images[0], quantity: 1}))
         console.log(cartProducts)
     }
 
