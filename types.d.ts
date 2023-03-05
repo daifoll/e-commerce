@@ -32,5 +32,19 @@ declare interface ISearchForm {
     handleSubmitSearch(event: FormEvent): void
 }
 
+// initialState для cartSlice
+declare interface ICartState {
+    products: IProductAction[];
+    total: number;
+}
+
+// Action (redux) продукт
+declare interface IProductAction {
+    id: number;
+    title: string;
+    price: number;
+    image: string;
+}
+
 // Картинки продукта
 declare type IImageProduct = string[]

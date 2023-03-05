@@ -2,9 +2,20 @@ import Layout from '@/components/Layout'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useSelector, useDispatch } from 'react-redux'
 import React, { SyntheticEvent } from 'react'
+import { addToCart, selectCartProducts } from '@/store/slices/cartSlice'
 
 export default function Product({ product }: InferGetStaticPropsType<typeof getStaticProps>) {
+    const cartProducts = useSelector(state => state)
+    const dispatch = useDispatch()
+    console.log(cartProducts)
+
+    function handleClickAddToCart(){
+        dispatch(addToCart({id: product.id, title: product.title, price: product.price, image: product.images[0]}))
+        console.log(cartProducts)
+    }
+
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
         e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
     }
@@ -22,8 +33,8 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
                         <div><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
                         <div><strong>{product.title}</strong></div>
                         <p>{product.description}</p>
-                        <button>BUY</button>
-                        <button>ADD TO CART</button>
+                        <button className='block'>BUY</button>
+                        <button className='block' onClick={handleClickAddToCart}>ADD TO CART</button>
                     </div>
                 </div>
             </div>
