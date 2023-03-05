@@ -1,10 +1,20 @@
 import Layout from "@/components/Layout";
+import { decrementQuantityCount, incrementQuantityCount } from "@/store/slices/cartSlice";
 import { useSelector, useDispatch } from 'react-redux'
 
 export default function Cart() {
     const cartProducts: ICartState = useSelector((state) => state) as ICartState
+    const dispatch = useDispatch()
+    
     console.log(cartProducts)
 
+    function handleClickIncrementQuantity(product: IProductActionCount) {
+        dispatch(incrementQuantityCount({id: product.id}))
+    }
+    function handleClickDecrementQuantity(product: IProductActionCount) {
+        dispatch(decrementQuantityCount({id: product.id}))
+    }
+    
     return (
         <Layout>
             <ul>
@@ -17,7 +27,10 @@ export default function Cart() {
                                 </div>
                                 <div>
                                     <p>{product.title}</p>
-                                    <p>Кол-во: {product.quantity}</p>
+                                    <p> Кол-во:</p>
+                                    <button onClick={() => handleClickDecrementQuantity(product)} className="text-xl">-</button>
+                                    {product.quantity}
+                                    <button onClick={() => handleClickIncrementQuantity(product)} className="text-xl">+</button><br/>
                                     <strong>{product.price}$</strong>
                                 </div>
                             </div>

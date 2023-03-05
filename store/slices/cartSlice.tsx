@@ -17,12 +17,30 @@ export const cartSlice = createSlice({
                 state.products.push(action.payload);
                 state.total += action.payload.price
             }
+        },
+
+        incrementQuantityCount: (state, action: PayloadAction<IProductActionCount>) => {
+            const index = state.products.findIndex((product) => product.id === action.payload.id)
+            console.log('increment')
+            if (index >= 0) {
+                state.products[index].quantity += 1
+            }
+        },
+
+        decrementQuantityCount: (state, action: PayloadAction<IProductActionCount>) => {
+            const index = state.products.findIndex((product) => product.id === action.payload.id)
+
+            if (index >= 0) {
+                if (state.products[index].quantity !== 0) {
+                    state.products[index].quantity -= 1
+                }
+            }
         }
     }
 })
 
 
-export const { addToCart } = cartSlice.actions
+export const { addToCart, incrementQuantityCount, decrementQuantityCount } = cartSlice.actions
 
 export const selectCartProducts = (state: RootState) => state
 

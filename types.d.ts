@@ -46,6 +46,9 @@ declare interface IProductAction {
     image: string;
     quantity: number;
 }
+declare interface IProductActionCount {
+    id: number;
+}
 
 // Картинки продукта
 declare type IImageProduct = string[]
