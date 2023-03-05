@@ -21,7 +21,7 @@ export default function Footer({ categories }: IFooterProps) {
                             if (index > 4) {
                                 return null
                             } else {
-                                return <li className="text-xl uppercase hover:text-stone-50 mb-3"><Link href={`/category/${cat.id}/1`}>{cat.name}</Link></li>
+                                return <li key={cat.id} className="text-xl uppercase hover:text-stone-50 mb-3"><Link href={`/category/${cat.id}/1`}>{cat.name}</Link></li>
                             }
 
                         })

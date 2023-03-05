@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import React, { SyntheticEvent } from 'react'
 
 export default function Product({ product }: InferGetStaticPropsType<typeof getStaticProps>) {
-
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
         e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
     }
