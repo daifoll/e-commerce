@@ -17,7 +17,14 @@ declare interface IProduct {
 
 // Общий макет (Layout)
 declare interface ILayout {
-    children?: ReactNode
+    children?: ReactNode;
+    categories?: ICategory[] 
+}
+
+// Футер
+declare interface IFooterProps {
+    children?: ReactNode;
+    categories: ICategory[];
 }
 
 // Форма поиска
