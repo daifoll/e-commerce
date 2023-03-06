@@ -1,6 +1,11 @@
 import Layout from "@/components/Layout";
 import { decrementQuantityCount, deleteProduct, incrementQuantityCount } from "@/store/slices/cartSlice";
 import { useSelector, useDispatch } from 'react-redux'
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+);
 
 export default function Cart() {
     const cartProducts: ICartState = useSelector((state) => state) as ICartState
@@ -50,7 +55,11 @@ export default function Cart() {
                         }
 
                         <p className="font-medium" > Общая  сумма: {cartProducts.total}$</p>
-                        <button className="uppercase text-xl font-bold">Перейти к оплате</button>
+                        <form action="/api/checkout_sessions" method="POST">
+                            <section>
+                                <button type="submit" role="link" className="uppercase text-xl font-bold">Перейти к оплате</button>
+                            </section>
+                        </form>
                     </ul>
                     :
                     <span>Корзина пуста</span>
