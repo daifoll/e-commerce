@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { SyntheticEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { IoIosAdd } from "react-icons/io"
 
 export default function Category({ categoryProducts, catId }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()
@@ -62,7 +63,10 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                                     <div><span>{product.category.name}</span></div>
                                     <div><Link href={`/product/${product.id}`}><strong>{product.title}</strong></Link></div>
                                     <p>{product.description}</p>
-                                    <button onClick={() => handleClickAddToCart({id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1})}>ADD TO CART</button>
+                                    
+                                    <button onClick={() => handleClickAddToCart({id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1})}>
+                                        <IoIosAdd className="text-4xl text-black hover:bg-yellow-300 hover:text-white rounded-full "/>
+                                    </button>
                                 </div>
                             </div>
                         </div>
