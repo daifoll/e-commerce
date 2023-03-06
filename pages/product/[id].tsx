@@ -11,9 +11,10 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
     const dispatch = useDispatch()
     console.log(cartProducts)
 
-    function handleClickAddToCart(){
-        dispatch(addToCart({id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1}))
+    function handleClickAddToCart({id, title, price, totalPrice, image, quantity = 1}: IProductAction){
+        dispatch(addToCart({id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity}))
         console.log(cartProducts)
+    
     }
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
@@ -33,8 +34,7 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
                         <div><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
                         <div><strong>{product.title}</strong></div>
                         <p>{product.description}</p>
-                        <button className='block'>BUY</button>
-                        <button className='block' onClick={handleClickAddToCart}>ADD TO CART</button>
+                        <button className='block' onClick={() => handleClickAddToCart({id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1})}>ADD TO CART</button>
                     </div>
                 </div>
             </div>

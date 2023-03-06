@@ -1,12 +1,16 @@
 import Layout from "@/components/Layout"
+import { addToCart } from "@/store/slices/cartSlice"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { SyntheticEvent, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 export default function Category({ categoryProducts, catId }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()
 
+    const cartProducts = useSelector(state => state)
+    const dispatch = useDispatch()
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
         e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
@@ -38,6 +42,12 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
 
     }, [])
 
+
+    function handleClickAddToCart({id, title, price, totalPrice, image, quantity = 1}: IProductAction){
+        dispatch(addToCart({id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity}))
+
+    }
+
     return (
         <Layout>
             <div className="flex flex-wrap">
@@ -52,8 +62,7 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                                     <div><span>{product.category.name}</span></div>
                                     <div><Link href={`/product/${product.id}`}><strong>{product.title}</strong></Link></div>
                                     <p>{product.description}</p>
-                                    <button>BUY</button>
-                                    <button>ADD TO CART</button>
+                                    <button onClick={() => handleClickAddToCart({id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1})}>ADD TO CART</button>
                                 </div>
                             </div>
                         </div>
