@@ -24,6 +24,8 @@ export const cartSlice = createSlice({
             console.log('increment')
             if (index >= 0) {
                 state.products[index].quantity += 1
+                state.products[index].totalPrice += state.products[index].price
+                state.total += state.products[index].price
             }
         },
 
@@ -33,6 +35,11 @@ export const cartSlice = createSlice({
             if (index >= 0) {
                 if (state.products[index].quantity !== 0) {
                     state.products[index].quantity -= 1
+                    state.products[index].totalPrice -= state.products[index].price
+
+
+                    state.total -= state.products[index].price
+
                 }
             }
         },
@@ -40,8 +47,12 @@ export const cartSlice = createSlice({
         deleteProduct: (state, action: PayloadAction<IProductActionDelete>) => {
             const index = state.products.findIndex((product) => product.id === action.payload.id)
 
-            if(index >= 0) {
-                state.total -= state.products[index].price
+            if (index >= 0) {
+                if(state.products[index].totalPrice === state.products[index].price){
+                    state.total -= state.products[index].price
+                }else if(state.products[index].totalPrice > state.products[index].price){
+                    state.total -= state.products[index].totalPrice
+                }
                 state.products.splice(index, 1)
             }
         }

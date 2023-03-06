@@ -43,6 +43,7 @@ declare interface IProductAction {
     id: number;
     title: string;
     price: number;
+    totalPrice: number;
     image: string;
     quantity: number;
 }
@@ -54,6 +55,10 @@ declare interface IProductActionCount {
 
 // Action (redux) для удаления товара
 declare interface IProductActionDelete {
+    id: number;
+}
+// Action (redux) для получения totalPrice
+declare interface IProductActionGetTotalPrice {
     id: number;
 }
 

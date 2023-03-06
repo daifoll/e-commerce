@@ -17,6 +17,11 @@ export default function Cart() {
     function handleClickDeleteProduct(product: IProductActionDelete) {
         dispatch(deleteProduct({id: product.id}))
     }
+    function getTotalPrice(id: number) {
+        const index = cartProducts.products.findIndex((product) => product.id === id)
+
+        return cartProducts.products[index].totalPrice
+    }
     
     return (
         <Layout>
@@ -34,7 +39,7 @@ export default function Cart() {
                                     <button onClick={() => handleClickDecrementQuantity(product)} className="text-xl">-</button>
                                     {product.quantity}
                                     <button onClick={() => handleClickIncrementQuantity(product)} className="text-xl">+</button><br/>
-                                    <strong>{product.price}$</strong>
+                                    <strong>{getTotalPrice(product.id)}$</strong>
                                     <button onClick={() => handleClickDeleteProduct(product)}>Удалить из корзины</button>
                                 </div>
                             </div>
