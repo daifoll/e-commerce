@@ -3,7 +3,8 @@ import { RootState } from "../store";
 
 const initialState: ICartState = {
     products: [],
-    total: 0
+    total: 0,
+    totalCount: 0
 }
 
 export const cartSlice = createSlice({
@@ -12,7 +13,8 @@ export const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action: PayloadAction<IProductAction>) => {
             const index = state.products.findIndex((product) => product.id === action.payload.id)
-
+            state.totalCount += 1
+            
             if (index < 0) {
                 state.products.push(action.payload);
                 state.total += action.payload.price
@@ -26,6 +28,7 @@ export const cartSlice = createSlice({
                 state.products[index].quantity += 1
                 state.products[index].totalPrice += state.products[index].price
                 state.total += state.products[index].price
+                state.totalCount += 1
             }
         },
 
@@ -34,10 +37,11 @@ export const cartSlice = createSlice({
 
             if (index >= 0) {
                 if (state.products[index].quantity !== 0) {
+                    
                     state.products[index].quantity -= 1
                     state.products[index].totalPrice -= state.products[index].price
 
-
+                    state.totalCount -= 1
                     state.total -= state.products[index].price
 
                 }
@@ -53,6 +57,7 @@ export const cartSlice = createSlice({
                 }else if(state.products[index].totalPrice > state.products[index].price){
                     state.total -= state.products[index].totalPrice
                 }
+                state.totalCount -= state.products[index].quantity
                 state.products.splice(index, 1)
             }
         }

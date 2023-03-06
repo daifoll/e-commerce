@@ -36,6 +36,7 @@ declare interface ISearchForm {
 declare interface ICartState {
     products: IProductAction[];
     total: number;
+    totalCount: number;
 }
 
 // Action (redux) продукт
