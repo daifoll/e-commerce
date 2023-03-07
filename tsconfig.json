@@ -19,6 +19,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "store/slices/cartSlice.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "store/slices/cartSlice.tsx", "pages/api/checkout_sessions.jsx"],
   "exclude": ["node_modules"]
 }

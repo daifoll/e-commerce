@@ -7,11 +7,27 @@ const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 );
 
+
 export default function Cart() {
     const cartProducts: ICartState = useSelector((state) => state) as ICartState
     const dispatch = useDispatch()
 
-    console.log(cartProducts)
+    const cartProductsStripe = cartProducts.products.map((product) => (
+        {
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: product.title,
+                    images: [product.image]
+
+                },
+                unit_amount: product.price
+            },
+            quantity: product.quantity
+        }
+    ))
+
+    console.log(cartProductsStripe)
 
     function handleClickIncrementQuantity(product: IProductActionCount) {
         dispatch(incrementQuantityCount({ id: product.id }))
@@ -56,6 +72,8 @@ export default function Cart() {
 
                         <p className="font-medium" > Общая  сумма: {cartProducts.total}$</p>
                         <form action="/api/checkout_sessions" method="POST">
+                            <input name='email' placeholder="Введите e-mail"/>
+                            <input name='products' type='hidden' value={JSON.stringify(cartProductsStripe)}/>
                             <section>
                                 <button type="submit" role="link" className="uppercase text-xl font-bold">Перейти к оплате</button>
                             </section>
