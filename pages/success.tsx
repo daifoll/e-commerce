@@ -3,13 +3,19 @@ import { useRouter } from 'next/router'
 import React from 'react'
 
 export default function Succes() {
-    const {
-        query: { session_id },
-    } = useRouter()
-    
+  const router = useRouter()
+
+  console.log(router.query)
+
   return (
     <Layout>
-        <div>СПАСИБО ЗА ПОКУПКУ</div>
+      {
+        router.query.success ?
+          <div>Спасибо за покупку!</div>
+          :
+          <div>Оплата отменена</div>
+
+      }
     </Layout>
   )
 }
