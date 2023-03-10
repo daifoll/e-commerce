@@ -9,7 +9,7 @@ export default function Header() {
   const dispatch = useDispatch()
 
   return (
-    <div className='p-7 px-20 bg-primal drop-shadow-lg'>
+    <div className='p-7 px-20 bg-primal drop-shadow-lg fixed w-full z-50'>
       <nav>
         <ul className='flex w-full justify-between items-center'>
           <li className='text-2xl hover:text-stone-50 uppercase transition duration-75'><Link href={'/'}>Главная</Link></li>
