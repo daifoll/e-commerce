@@ -36,7 +36,6 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
 
   return (
     <Layout>
-      <SearchForm />
       <h1 className="text-3xl font-medium uppercase mt-20">Выберите категорию</h1>
       <div className="flex flex-wrap mt-4">
         {
