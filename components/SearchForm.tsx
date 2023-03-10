@@ -25,6 +25,7 @@ export default function SearchForm() {
                         text-2xl
                         border-primal
                         border-2
+                        p-1
                     "
                 />
                 <button
@@ -35,6 +36,7 @@ export default function SearchForm() {
                         text-xl
                         font-medium
                         bg-primal
+                        transition duration-75
                         hover:text-stone-50
                     ">
                     Поиск

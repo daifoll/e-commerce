@@ -11,11 +11,11 @@ export default function Header() {
     <div className='p-14 bg-primal'>
       <nav>
         <ul className='flex w-full justify-between'>
-          <li className='text-2xl hover:text-stone-50 uppercase'><Link href={'/'}>Главная</Link></li>
-          <li className='text-2xl hover:text-stone-50 uppercase'><Link href={'/about'}>О проекте</Link></li>
-          <li className='text-2xl hover:text-stone-50 uppercase'><Link href={'/contacts'}>Контакты</Link></li>
+          <li className='text-2xl hover:text-stone-50 uppercase transition duration-75'><Link href={'/'}>Главная</Link></li>
+          <li className='text-2xl hover:text-stone-50 uppercase transition duration-75'><Link href={'/about'}>О проекте</Link></li>
+          <li className='text-2xl hover:text-stone-50 uppercase transition duration-75'><Link href={'/contacts'}>Контакты</Link></li>
           <li className='text-4xl uppercase relative'>
-            <Link className='hover:text-stone-50' href={'/cart'}>
+            <Link className='hover:text-stone-50 transition duration-75' href={'/cart'}>
               <BsFillCartCheckFill/>
               </Link>
             <span className='text-xl font-medium text-white absolute top-[-60%] left-[90%]'>{cartProducts.totalCount}</span>

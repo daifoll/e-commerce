@@ -7,10 +7,10 @@ export default function Footer({ categories }: IFooterProps) {
             <nav className="basis-1/2">
                 <h3 className="text-2xl font-medium uppercase mb-4">Страницы</h3>
                 <ul className='flex flex-col items-start h-auto'>
-                    <li className='text-xl hover:text-stone-50 uppercase mb-3'><Link href={'/'}>Главная</Link></li>
-                    <li className='text-xl hover:text-stone-50 uppercase mb-3'><Link href={'/about'}>О проекте</Link></li>
-                    <li className='text-xl hover:text-stone-50 uppercase mb-3'><Link href={'/contacts'}>Контакты</Link></li>
-                    <li className='text-xl hover:text-stone-50 uppercase mb-3'><Link href={'/cart'}>Корзина</Link></li>
+                    <li className='hover:text-stone-50 uppercase text-lg mb-3'><Link href={'/'}>Главная</Link></li>
+                    <li className='hover:text-stone-50 uppercase text-lg mb-3'><Link href={'/about'}>О проекте</Link></li>
+                    <li className='hover:text-stone-50 uppercase text-lg mb-3'><Link href={'/contacts'}>Контакты</Link></li>
+                    <li className='hover:text-stone-50 uppercase text-lg mb-3'><Link href={'/cart'}>Корзина</Link></li>
                 </ul>
             </nav>
             <nav className="basis-1/2">
@@ -21,7 +21,7 @@ export default function Footer({ categories }: IFooterProps) {
                             if (index > 4) {
                                 return null
                             } else {
-                                return <li key={cat.id} className="text-xl uppercase hover:text-stone-50 mb-3"><Link href={`/category/${cat.id}/1`}>{cat.name}</Link></li>
+                                return <li key={cat.id} className="uppercase hover:text-stone-50 text-lg transition duration-75 mb-3"><Link href={`/category/${cat.id}/1`}>{cat.name}</Link></li>
                             }
 
                         })
