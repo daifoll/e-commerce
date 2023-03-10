@@ -23,7 +23,7 @@ export default function SearchForm() {
                         basis-11/12
                         h-16
                         text-2xl
-                        border-yellow-300
+                        border-primal
                         border-2
                     "
                 />
@@ -34,7 +34,7 @@ export default function SearchForm() {
                         grow
                         text-xl
                         font-medium
-                        bg-amber-300
+                        bg-primal
                         hover:text-stone-50
                     ">
                     Поиск

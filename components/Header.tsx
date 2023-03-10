@@ -8,7 +8,7 @@ export default function Header() {
   const dispatch = useDispatch()
 
   return (
-    <div className='p-14 bg-yellow-400'>
+    <div className='p-14 bg-primal'>
       <nav>
         <ul className='flex w-full justify-between'>
           <li className='text-2xl hover:text-stone-50 uppercase'><Link href={'/'}>Главная</Link></li>
