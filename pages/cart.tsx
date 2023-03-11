@@ -1,7 +1,9 @@
 import Layout from "@/components/Layout";
 import { decrementQuantityCount, deleteProduct, incrementQuantityCount } from "@/store/slices/cartSlice";
 import { useSelector, useDispatch } from 'react-redux'
+import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 import { loadStripe } from '@stripe/stripe-js';
+import Link from "next/link";
 
 const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -48,37 +50,48 @@ export default function Cart() {
         <Layout>
             {
                 cartProducts.products.length ?
-                    <ul>
-                        {
-                            cartProducts.products.map((product) => (
-                                <li key={product.id + new Date().getDate()} className="mt-8">
-                                    <div className="flex border-2 border-black">
-                                        <div className="w-16">
-                                            <img className="w-full h-28 object-cover" src={product.image} alt={product.title} />
-                                        </div>
-                                        <div>
-                                            <p>{product.title}</p>
-                                            <p> Кол-во:</p>
-                                            <button onClick={() => handleClickDecrementQuantity(product)} className="text-xl">-</button>
-                                            {product.quantity}
-                                            <button onClick={() => handleClickIncrementQuantity(product)} className="text-xl">+</button><br />
-                                            <strong>{getTotalPrice(product.id)}$</strong>
-                                            <button onClick={() => handleClickDeleteProduct(product)}>Удалить из корзины</button>
-                                        </div>
-                                    </div>
-                                </li>
-                            ))
-                        }
-
-                        <p className="font-medium" > Общая  сумма: {cartProducts.total}$</p>
-                        <form action="/api/checkout_sessions" method="POST">
-                            <input name='email' placeholder="Введите e-mail"/>
-                            <input name='products' type='hidden' value={JSON.stringify(cartProductsStripe)}/>
-                            <section>
-                                <button type="submit" role="link" className="uppercase text-xl font-bold">Перейти к оплате</button>
-                            </section>
-                        </form>
-                    </ul>
+                    <div className="flex items-start">
+                        <div className="basis-4/6">
+                            <ul>
+                                {
+                                    cartProducts.products.map((product) => (
+                                        <li key={product.id + new Date().getDate()}>
+                                            <div className="flex bg-green-200 p-5 mb-3 rounded-2xl">
+                                                <div className="w-40">
+                                                    <img className="w-full h-full object-cover" src={product.image} alt={product.title} />
+                                                </div>
+                                                <div className="ml-6">
+                                                    <p className="text-2xl"><Link href={`/product/${product.id}`}>{product.title}</Link></p>
+                                                    <p className="text-xl mt-5"> Кол-во:</p>
+                                                    <div className="flex items-center mt-1">
+                                                        <button onClick={() => handleClickDecrementQuantity(product)} className="text-3xl mr-2">
+                                                            <AiFillMinusCircle />
+                                                        </button>
+                                                        <span className="text-3xl">{product.quantity}</span>
+                                                        <button onClick={() => handleClickIncrementQuantity(product)} className="text-3xl ml-2">
+                                                            <AiFillPlusCircle />
+                                                        </button>
+                                                    </div>
+                                                    <div className="mt-5"><strong className="text-3xl">{getTotalPrice(product.id)}$</strong></div>
+                                                    <button className="text-base mt-4 p-2 font-semibold uppercase bg-red-400 hover:bg-red-300 text-white rounded-full" onClick={() => handleClickDeleteProduct(product)}>Удалить из корзины</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                        <div className="sticky top-[110px] basis-2/6 ml-4 mb-3  bg-green-200 rounded-2xl p-5 focus:outline-none">
+                            <p className="font-semibold text-2xl">Итого: {cartProducts.total}$</p>
+                            <form action="/api/checkout_sessions" method="POST">
+                                <input className="text-xl font-medium rounded-2xl p-2 focus:outline-none mt-4" name='email' placeholder="Введите e-mail" />
+                                <input name='products' type='hidden' value={JSON.stringify(cartProductsStripe)} />
+                                <div className="mt-8">
+                                    <button type="submit" role="link" className="uppercase font-bold text-base mt-4 p-2 bg-yellow-400 hover:bg-yellow-300 text-white rounded-full">Перейти к оплате</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     :
                     <span>Корзина пуста</span>
             }

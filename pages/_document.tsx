@@ -3,7 +3,7 @@ export default function Document() {
   
   return (
     <Html lang="en">
-      <Head />
+      <Head title='Store - Next.js | Stripe | Typescript | Tailwind pet-project'/>
       <body>
         <Main />
         <NextScript />

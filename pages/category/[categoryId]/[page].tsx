@@ -44,28 +44,32 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
     }, [])
 
 
-    function handleClickAddToCart({id, title, price, totalPrice, image, quantity = 1}: IProductAction){
-        dispatch(addToCart({id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity}))
+    function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1 }: IProductAction) {
+        dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity }))
 
     }
 
     return (
         <Layout>
+            <h1 className="text-3xl font-medium uppercase my-4">{categoryProducts[0].category.name}</h1>
             <div className="flex flex-wrap">
                 {
                     categoryProducts.map((product: IProduct) =>
-                        <div key={product.id} className="basis-1/3">
+                        <div key={product.id} className="basis-1/3 p-2">
                             <div key={product.id} className="flex flex-col items-center mb-10">
-                                <div className="w-80">
-                                    <img className="w-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
+                                <div className="w-full overflow-hidden">
+                                    <Link className="" href={`/product/${product.id}`}>
+                                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
+                                    </Link>
                                 </div>
                                 <div>
-                                    <div><span>{product.category.name}</span></div>
-                                    <div><Link href={`/product/${product.id}`}><strong>{product.title}</strong></Link></div>
-                                    <p>{product.description}</p>
-                                    
-                                    <button onClick={() => handleClickAddToCart({id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1})}>
-                                        <IoIosAdd className="text-4xl text-black hover:bg-yellow-300 hover:text-white rounded-full "/>
+                                    <div className="text-lg mt-4"><span>{product.category.name}</span></div>
+                                    <div className="text-xl"><Link href={`/product/${product.id}`}><strong>{product.title}</strong></Link></div>
+                                    <p className="text-lg mt-4 min-h-[80px]">{product.description}</p>
+                                    <div className="mt-4"><span className="text-2xl font-semibold">{product.price}$</span></div>
+                                    <button className="text-base mt-4 p-2 font-semibold uppercase bg-primal hover:bg-green-400 text-white rounded-full" onClick={() => handleClickAddToCart({ id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1 })}>
+                                        Добавить в корзину
+                                        {/* <IoIosAdd className="text-4xl text-black hover:bg-primal hover:text-white rounded-full"/> */}
                                     </button>
                                 </div>
                             </div>
@@ -78,14 +82,14 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
             <div className="pt-9">
                 {
                     pageCount.map(page => {
-                        return <Link key={page} className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageCountPath}>{page + 1}</Link>
+                        return <Link key={page} className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageCountPath}>{page + 1}</Link>
                     })
 
                 }
 
                 {
                     pageCount.length > 0 ?
-                        <Link className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageNextBtnPath}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
+                        <Link className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageNextBtnPath}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
                         :
                         null
                 }

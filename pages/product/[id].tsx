@@ -11,10 +11,10 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
     const dispatch = useDispatch()
     console.log(cartProducts)
 
-    function handleClickAddToCart({id, title, price, totalPrice, image, quantity = 1}: IProductAction){
-        dispatch(addToCart({id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity}))
+    function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1 }: IProductAction) {
+        dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity }))
         console.log(cartProducts)
-    
+
     }
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
@@ -24,17 +24,21 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
     return (
         <Layout>
             <div>
-                <div className="flex basis-1/3" key={product.id}>
-                    <div className="w-80 flex flex-wrap justify-center">
-                        <img className="basis-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)}/>
-                        <img className="basis-1/2 w-20 h-40 object-cover" src={product.images[1]} onError={(e) => hanlerOnErrorImage(e)}/>
-                        <img className="basis-1/2 w-20 h-40 object-cover" src={product.images[2]} onError={(e) => hanlerOnErrorImage(e)}/>
+                <div className="flex basis-1/2" key={product.id}>
+                    <div className="w-[65%] flex flex-wrap justify-center">
+                        <img className="basis-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
+                        <img className="basis-1/2 w-20 h-40 object-cover" src={product.images[1]} onError={(e) => hanlerOnErrorImage(e)} />
+                        <img className="basis-1/2 w-20 h-40 object-cover" src={product.images[2]} onError={(e) => hanlerOnErrorImage(e)} />
                     </div>
-                    <div>
-                        <div><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
-                        <div><strong>{product.title}</strong></div>
-                        <p>{product.description}</p>
-                        <button className='block' onClick={() => handleClickAddToCart({id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1})}>ADD TO CART</button>
+                    <div className='ml-6'>
+                        <div className="text-lg mt-4"><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
+                        <div className="text-xl"><strong>{product.title}</strong></div>
+                        <p className="text-lg mt-4 min-h-[80px]">{product.description}</p>
+                        <div className="mt-1"><span className="text-2xl font-semibold">{product.price}$</span></div>
+                        <button className="text-base mt-4 p-2 font-semibold uppercase bg-primal hover:bg-green-400 text-white rounded-full" onClick={() => handleClickAddToCart({ id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1 })}>
+                            Добавить в корзину
+                            {/* <IoIosAdd className="text-4xl text-black hover:bg-primal hover:text-white rounded-full"/> */}
+                        </button>
                     </div>
                 </div>
             </div>

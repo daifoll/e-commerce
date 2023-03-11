@@ -13,6 +13,7 @@ module.exports = {
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],
         'rubik': ['Rubik', 'sans-serif'],
+        'anton': ['Anton', 'sans-serif'],
 
       },
 

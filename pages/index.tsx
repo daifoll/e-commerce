@@ -36,23 +36,25 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
 
   return (
     <Layout>
-      <h1 className="text-3xl font-medium uppercase mt-40">Выберите категорию</h1>
-      <div className="flex flex-wrap mt-4">
-        {
-          categories.map((cat: ICategory, index) => {
-            if (index > 4) {
-              return null
-            } else {
-              return <div key={cat.id} className="basis-1/2 p-1 mt-5">
-                <Link href={`/category/${cat.id}/1`} className="uppercase text-lg">{cat.name}</Link>
-                <div className="w-full flex overflow-hidden">
-                  <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/1`}><img className="w-full h-64 object-cover" src={cat.image} onError={(e) => hanlerOnErrorImage(e, cat.name)} alt={cat.name} /></Link>
+      <div className="">
+        <h1 className="text-3xl font-medium uppercase">Выберите категорию</h1>
+        <div className="flex flex-wrap mt-4">
+          {
+            categories.map((cat: ICategory, index) => {
+              if (index > 4) {
+                return null
+              } else {
+                return <div key={cat.id} className="basis-1/2 p-1 mt-5">
+                  <Link href={`/category/${cat.id}/1`} className="uppercase text-lg">{cat.name}</Link>
+                  <div className="w-full flex overflow-hidden">
+                    <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/1`}><img className="w-full h-64 object-cover" src={cat.image} onError={(e) => hanlerOnErrorImage(e, cat.name)} alt={cat.name} /></Link>
+                  </div>
                 </div>
-              </div>
+              }
             }
+            )
           }
-          )
-        }
+        </div>
       </div>
     </Layout>
   )

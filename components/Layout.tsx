@@ -20,7 +20,7 @@ export default function Layout({ children }: ILayout) {
     return (
         <div className='h-screen flex flex-col justify-between font-montserrat font-normal'>
             <Header />
-            <main className='mb-20'>{children}</main>
+            <main className='mb-20 mt-40 px-8'>{children}</main>
             <Footer categories={categories} />
         </div>
     )
