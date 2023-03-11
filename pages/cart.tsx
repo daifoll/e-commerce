@@ -88,7 +88,7 @@ export default function Cart() {
                                 <input className="text-xl font-medium rounded-2xl p-2 focus:outline-none mt-4" name='email' placeholder="Введите e-mail" />
                                 <input name='products' type='hidden' value={JSON.stringify(cartProductsStripe)} />
                                 <div className="mt-8">
-                                    <button type="submit" role="link" className="uppercase font-bold text-base mt-4 p-2 bg-yellow-400 hover:bg-yellow-300 text-white rounded-full">Перейти к оплате</button>
+                                    <button type="submit" role="link" className="uppercase font-bold text-base mt-4 p-2 px-4 bg-white hover:bg-gray-100 text-black rounded-full">Перейти к оплате</button>
                                 </div>
                             </form>
                         </div>
