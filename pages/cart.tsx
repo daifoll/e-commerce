@@ -38,7 +38,7 @@ export default function Cart() {
         dispatch(decrementQuantityCount({ id: product.id }))
     }
     function handleClickDeleteProduct(product: IProductActionDelete) {
-        dispatch(deleteProduct({ id: product.id }))
+        dispatch(deleteProduct({ id: product.id}))
     }
     function getTotalPrice(id: number) {
         const index = cartProducts.products.findIndex((product) => product.id === id)
@@ -48,9 +48,10 @@ export default function Cart() {
 
     return (
         <Layout>
+            <h1 className="text-3xl font-medium uppercase">Корзина</h1>
             {
                 cartProducts.products.length ?
-                    <div className="flex items-start">
+                    <div className="flex items-start mt-4">
                         <div className="basis-4/6">
                             <ul>
                                 {

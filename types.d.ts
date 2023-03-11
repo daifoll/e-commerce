@@ -47,6 +47,7 @@ declare interface IProductAction {
     totalPrice: number;
     image: string;
     quantity: number;
+    inCart: boolean;
 }
 
 // Action (redux) для функций увлеичения и уменьшения кол-ва товара

@@ -4,17 +4,20 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import React, { SyntheticEvent } from 'react'
-import { addToCart, selectCartProducts } from '@/store/slices/cartSlice'
+import { addToCart, deleteProduct, selectCartProducts } from '@/store/slices/cartSlice'
 
 export default function Product({ product }: InferGetStaticPropsType<typeof getStaticProps>) {
-    const cartProducts = useSelector(state => state)
+    const cartProducts = useSelector(state => state) as ICartState
     const dispatch = useDispatch()
     console.log(cartProducts)
 
     function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1 }: IProductAction) {
-        dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity }))
-        console.log(cartProducts)
+        dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity, inCart: true }))
 
+    }
+
+    function handleClickDeleteProduct(product: IProductActionDelete) {
+        dispatch(deleteProduct({ id: product.id}))
     }
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
@@ -35,10 +38,17 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
                         <div className="text-xl"><strong>{product.title}</strong></div>
                         <p className="text-lg mt-4 min-h-[80px]">{product.description}</p>
                         <div className="mt-1"><span className="text-2xl font-semibold">{product.price}$</span></div>
-                        <button className="text-base mt-4 p-2 font-semibold uppercase bg-primal hover:bg-green-400 text-white rounded-full" onClick={() => handleClickAddToCart({ id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1 })}>
-                            Добавить в корзину
-                            {/* <IoIosAdd className="text-4xl text-black hover:bg-primal hover:text-white rounded-full"/> */}
-                        </button>
+                        {
+                            cartProducts.products.filter((cartProduct: IProductAction) => cartProduct.id === product.id)[0] ?
+                                <button className="text-base mt-4 p-2 font-semibold uppercase bg-red-400 hover:bg-red-300 text-white rounded-full" onClick={() => handleClickDeleteProduct(product)}>
+                                    Удалить из корзины
+                                </button>
+                                :
+                                <button className="text-base mt-4 p-2 font-semibold uppercase bg-primal hover:bg-green-400 text-white rounded-full" onClick={() => handleClickAddToCart({ id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1, inCart: true })}>
+                                    Добавить в корзину
+                                </button>
+                        }
+
                     </div>
                 </div>
             </div>

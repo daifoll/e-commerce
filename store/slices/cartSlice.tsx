@@ -4,7 +4,7 @@ import { RootState } from "../store";
 const initialState: ICartState = {
     products: [],
     total: 0,
-    totalCount: 0
+    totalCount: 0,
 }
 
 export const cartSlice = createSlice({
@@ -13,11 +13,12 @@ export const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action: PayloadAction<IProductAction>) => {
             const index = state.products.findIndex((product) => product.id === action.payload.id)
-            state.totalCount += 1
+            
             
             if (index < 0) {
                 state.products.push(action.payload);
                 state.total += action.payload.price
+                state.totalCount += 1
             }
         },
 
