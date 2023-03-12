@@ -14,21 +14,27 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
     switch (`${catName.toLowerCase()}`) {
       case 'clothes':
         e.currentTarget.src = '/stubimg/clothes.jpg'
+        e.currentTarget.alt = 'Clothes Category'
         break
       case 'shoes':
         e.currentTarget.src = '/stubimg/shoes.jpg'
+        e.currentTarget.alt = 'Shoes Category'
         break
       case 'electronics':
         e.currentTarget.src = '/stubimg/electronics.jpg'
+        e.currentTarget.alt = 'Electronics Category'
         break
       case 'others':
         e.currentTarget.src = '/stubimg/others.jpg'
+        e.currentTarget.alt = 'Others Category'
         break
       case 'furniture':
         e.currentTarget.src = '/stubimg/furniture.jpg'
+        e.currentTarget.alt = 'Furniture Category'
         break
       default:
-        e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
+        e.currentTarget.src = '/stubimg/imageNotFound.png'
+        e.currentTarget.alt = 'Category image not found'
         break
     }
 

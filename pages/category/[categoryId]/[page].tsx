@@ -14,7 +14,8 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
     const dispatch = useDispatch()
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
-        e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
+        e.currentTarget.src = '/stubimg/imageNotFound.png'
+        e.currentTarget.alt = 'Product image not found'
     }
 
     const [pageCount, setPageCount] = useState<number[]>([])
@@ -63,7 +64,7 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                             <div key={product.id} className="flex flex-col items-center mb-10">
                                 <div className="w-full overflow-hidden">
                                     <Link className="" href={`/product/${product.id}`}>
-                                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
+                                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} alt={product.title} onError={(e) => hanlerOnErrorImage(e)} />
                                     </Link>
                                 </div>
                                 <div>

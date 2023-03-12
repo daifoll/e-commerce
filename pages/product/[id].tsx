@@ -21,7 +21,8 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
     }
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
-        e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
+        e.currentTarget.src = '/stubimg/imageNotFound.png'
+        e.currentTarget.alt = 'Category image not found'
     }
 
     return (
@@ -29,9 +30,9 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
             <div>
                 <div className="flex basis-1/2" key={product.id}>
                     <div className="w-[65%] flex flex-wrap justify-center">
-                        <img className="basis-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
-                        <img className="basis-1/2 w-20 h-40 object-cover" src={product.images[1]} onError={(e) => hanlerOnErrorImage(e)} />
-                        <img className="basis-1/2 w-20 h-40 object-cover" src={product.images[2]} onError={(e) => hanlerOnErrorImage(e)} />
+                        <img className="basis-full h-64 object-cover" src={product.images[0]} alt={product.title} onError={(e) => hanlerOnErrorImage(e)} />
+                        <img className="basis-1/2 w-20 h-40 object-cover" src={product.images[1]} alt={product.title} onError={(e) => hanlerOnErrorImage(e)} />
+                        <img className="basis-1/2 w-20 h-40 object-cover" src={product.images[2]} alt={product.title} onError={(e) => hanlerOnErrorImage(e)} />
                     </div>
                     <div className='ml-6'>
                         <div className="text-lg mt-4"><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
