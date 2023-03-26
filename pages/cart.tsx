@@ -1,9 +1,10 @@
 import Layout from "@/components/Layout";
-import { decrementQuantityCount, deleteProduct, incrementQuantityCount } from "@/store/slices/cartSlice";
+import { decrementQuantityCount, deleteProduct, incrementQuantityCount, saveToLocalStorage } from "@/store/slices/cartSlice";
 import { useSelector, useDispatch } from 'react-redux'
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 import { loadStripe } from '@stripe/stripe-js';
 import Link from "next/link";
+import { useEffect } from "react";
 
 const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -14,7 +15,9 @@ export default function Cart() {
     const cartProducts: ICartState = useSelector((state) => state) as ICartState
     const dispatch = useDispatch()
 
-    const cartProductsStripe = cartProducts.products.map((product) => (
+    console.log('СТЕЙТ:',cartProducts.cartReducer.total)
+
+    const cartProductsStripe = cartProducts.cartReducer?.products.map((product) => (
         {
             price_data: {
                 currency: 'usd',
@@ -29,7 +32,7 @@ export default function Cart() {
         }
     ))
 
-    console.log(cartProductsStripe)
+    // console.log(cartProductsStripe)
 
     function handleClickIncrementQuantity(product: IProductActionCount) {
         dispatch(incrementQuantityCount({ id: product.id }))
@@ -38,24 +41,24 @@ export default function Cart() {
         dispatch(decrementQuantityCount({ id: product.id }))
     }
     function handleClickDeleteProduct(product: IProductActionDelete) {
-        dispatch(deleteProduct({ id: product.id}))
+        dispatch(deleteProduct({ id: product.id }))
     }
     function getTotalPrice(id: number) {
-        const index = cartProducts.products.findIndex((product) => product.id === id)
+        const index = cartProducts.cartReducer.products.findIndex((product) => product.id === id)
 
-        return cartProducts.products[index].totalPrice
+        return cartProducts.cartReducer.products[index].totalPrice
     }
 
     return (
         <Layout>
             <h1 className="text-3xl font-medium uppercase">Корзина</h1>
             {
-                cartProducts.products.length ?
+                cartProducts.cartReducer?.products.length ?
                     <div className="flex items-start mt-4">
                         <div className="basis-4/6">
                             <ul>
                                 {
-                                    cartProducts.products.map((product) => (
+                                    cartProducts.cartReducer.products.map((product) => (
                                         <li key={product.id + new Date().getDate()}>
                                             <div className="flex bg-green-200 p-5 mb-3 rounded-2xl">
                                                 <div className="w-40">
@@ -83,7 +86,7 @@ export default function Cart() {
                             </ul>
                         </div>
                         <div className="sticky top-[110px] basis-2/6 ml-4 mb-3  bg-green-200 rounded-2xl p-5 focus:outline-none">
-                            <p className="font-semibold text-2xl">Итого: {cartProducts.total}$</p>
+                            <p className="font-semibold text-2xl">Итого: {cartProducts.cartReducer.total}$</p>
                             <form action="/api/checkout_sessions" method="POST">
                                 <input className="text-xl font-medium rounded-2xl p-2 focus:outline-none mt-4" name='email' placeholder="Введите e-mail" />
                                 <input name='products' type='hidden' value={JSON.stringify(cartProductsStripe)} />

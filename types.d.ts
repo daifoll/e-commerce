@@ -32,9 +32,15 @@ declare interface ISearchForm {
     handleSubmitSearch(event: FormEvent): void
 }
 
+declare interface cartReducer {
+    products: IProductAction[];
+    total: number;
+    totalCount: number;
+}
 // initialState для cartSlice
 declare interface ICartState {
     products: IProductAction[];
+    cartReducer: cartReducer,
     total: number;
     totalCount: number;
 }

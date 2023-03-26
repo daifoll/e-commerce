@@ -72,7 +72,7 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                                     <p className="text-lg mt-4 min-h-[80px]">{product.description}</p>
                                     <div className="mt-4"><span className="text-2xl font-semibold">{product.price}$</span></div>
                                     {
-                                        cartProducts.products.filter((cartProduct: IProductAction) => cartProduct.id === product.id)[0] ?
+                                        cartProducts.cartReducer?.products.filter((cartProduct: IProductAction) => cartProduct.id === product.id)[0] ?
                                             <button className="text-base mt-4 p-2 font-semibold uppercase bg-red-400 hover:bg-red-300 text-white rounded-full" onClick={() => handleClickDeleteProduct(product)}>
                                                 Удалить из корзины
                                             </button>
