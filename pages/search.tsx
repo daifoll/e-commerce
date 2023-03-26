@@ -51,7 +51,12 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
 
     return (
         <Layout>
-            <h1 className="text-2xl">Найденные товары по запросу: "{router.query.byTitle}"</h1>
+            {
+                searchedProducts.length ?
+                    <h1 className="text-2xl">Найденные товары по запросу: "{router.query.byTitle}"</h1>
+                    :
+                    <h1 className="text-2xl">По запросу: "{router.query.byTitle}" ничего не найдено.</h1>
+            }
             <div className="flex flex-wrap mt-5">
                 {
                     searchedProducts.map((product: IProduct) =>
