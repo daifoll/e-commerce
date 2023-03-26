@@ -29,12 +29,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
     {
-      loading ? 
+      // loading ? 
       <Layout>
-        <span>ЗАГРУЗКА...</span>
+        <span className='font-rubik text-3xl'>ЗАГРУЗКА...</span>
       </Layout>
-      :
-        <Component {...pageProps} />
+
+      // :
+      //   <Component {...pageProps} />
 
     }
     </Provider>
