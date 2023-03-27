@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout"
+import Sort from "@/components/Sort"
 import { addToCart, deleteProduct } from "@/store/slices/cartSlice"
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Link from "next/link"
@@ -37,28 +38,6 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
     const [sortTitle, setSortTitle] = useState(router.query.sortBy)
 
 
-    function sortByPrice(e: ChangeEvent<HTMLSelectElement>) {
-        const value = e.target.value
-
-        if (value === 'lowtohigh' || value === 'hightolow') {
-            e.preventDefault()
-
-            router.push({
-                pathname: `/search`,
-                query: { byTitle: router.query.byTitle, page: router.query.page, sortBy: value }
-            })
-        }
-    }
-
-    function clearSort(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-        e.preventDefault()
-
-        router.push({
-            pathname: `/search`,
-            query: { byTitle: router.query.byTitle, page: router.query.page, sortBy: 'default' }
-        })
-    }
-
 
     useEffect(() => {
 
@@ -75,7 +54,6 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
 
     }, [])
 
-    console.log(sortBy)
     return (
         <Layout>
             {
@@ -86,14 +64,8 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
             }
 
             {
-                <div>
-                    <span>Sort By Price</span>
-                    <select onChange={(e) => sortByPrice(e)} value={router.query.sortBy}>
-                        <option value="lowtohigh">Low to High</option>
-                        <option value="hightolow">High to Low</option>
-                    </select>
-                    <button onClick={(e) => clearSort(e)}>Сбросить фильтры</button>
-                </div>
+                // Сортировка товаров
+                <Sort/>
             }
 
 
