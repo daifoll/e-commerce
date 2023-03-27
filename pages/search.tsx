@@ -40,22 +40,7 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
     function sortByPrice(e: ChangeEvent<HTMLSelectElement>) {
         const value = e.target.value
 
-        if (value === 'lowtohigh') {
-            // setSortedByPriceProducts(searchedProducts.sort((productA, productB) => { return productA.price - productB.price }))
-            // setSortChange('Low to High')
-
-            e.preventDefault()
-
-            router.push({
-                pathname: `/search`,
-                query: { byTitle: router.query.byTitle, page: router.query.page, sortBy: value }
-            })
-        }
-
-        if (value === 'hightolow') {
-            // setSortedByPriceProducts(searchedProducts.sort((productA, productB) => { return productB.price - productA.price }))
-            // setSortChange('High to Low')
-
+        if (value === 'lowtohigh' || value === 'hightolow') {
             e.preventDefault()
 
             router.push({
