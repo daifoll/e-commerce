@@ -16,17 +16,17 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     Router.events.on("routeChangeStart", (url) => {
       setLoading(true)
-      console.log(loading)
+      // console.log(loading)
     });
 
     Router.events.on("routeChangeComplete", (url) => {
       setLoading(false)
-      console.log(loading)
+      // console.log(loading)
     });
 
     Router.events.on("routeChangeError", (url) => {
       setLoading(false)
-      console.log(loading)
+      // console.log(loading)
     });
   }, [])
 
