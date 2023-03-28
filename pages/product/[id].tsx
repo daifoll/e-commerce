@@ -21,7 +21,32 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
     }
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
-        e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
+        const catName = e.currentTarget.alt.toLocaleLowerCase()
+        
+        e.currentTarget.src = './stubimg/notfound.png'
+        e.currentTarget.alt = 'not found'
+        
+        switch (catName) {
+            case 'clothes':
+                e.currentTarget.src = './stubimg/clothes.jpg'
+                break
+            case 'electronics':
+                e.currentTarget.src = './stubimg/electronics.jpg'
+                break
+            case 'furniture':
+                e.currentTarget.src = './stubimg/furniture.jpg'
+                break
+            case 'shoes':
+                e.currentTarget.src = './stubimg/shoes.jpg'
+                break
+            case 'others':
+                e.currentTarget.src = './stubimg/others.jpg'
+                break
+            default:
+                e.currentTarget.src = './stubimg/notfound.png'
+                e.currentTarget.alt = 'not found'
+                break
+        }
     }
 
     return (
@@ -29,9 +54,9 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
             <div>
                 <div className="flex basis-1/2" key={product.id}>
                     <div className="w-[65%] flex flex-wrap justify-center">
-                        <img className="basis-full h-72 object-cover object-center" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
-                        <img className="basis-1/2 w-20 h-56 object-cover" src={product.images[1]} onError={(e) => hanlerOnErrorImage(e)} />
-                        <img className="basis-1/2 w-20 h-56 object-cover" src={product.images[2]} onError={(e) => hanlerOnErrorImage(e)} />
+                        <img className="basis-full h-72 object-cover object-center" src={product.images[0]} alt={product.category.name}  onError={(e) => hanlerOnErrorImage(e)} />
+                        <img className="basis-1/2 w-20 h-56 object-cover" src={product.images[1]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
+                        <img className="basis-1/2 w-20 h-56 object-cover" src={product.images[2]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
                     </div>
                     <div className='ml-6'>
                         <div className="text-lg mt-4"><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>

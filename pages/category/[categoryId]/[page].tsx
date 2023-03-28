@@ -14,7 +14,32 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
     const dispatch = useDispatch()
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
-        e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
+        const catName = e.currentTarget.alt.toLocaleLowerCase()
+        
+        e.currentTarget.src = './stubimg/notfound.png'
+        e.currentTarget.alt = 'not found'
+        
+        switch (catName) {
+            case 'clothes':
+                e.currentTarget.src = './stubimg/clothes.jpg'
+                break
+            case 'electronics':
+                e.currentTarget.src = './stubimg/electronics.jpg'
+                break
+            case 'furniture':
+                e.currentTarget.src = './stubimg/furniture.jpg'
+                break
+            case 'shoes':
+                e.currentTarget.src = './stubimg/shoes.jpg'
+                break
+            case 'others':
+                e.currentTarget.src = './stubimg/others.jpg'
+                break
+            default:
+                e.currentTarget.src = './stubimg/notfound.png'
+                e.currentTarget.alt = 'not found'
+                break
+        }
     }
 
     const [pageCount, setPageCount] = useState<number[]>([])
@@ -44,13 +69,13 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
     }, [])
 
 
-    function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1}: IProductAction) {
-        dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity, inCart: true}))
+    function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1 }: IProductAction) {
+        dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity, inCart: true }))
 
     }
 
     function handleClickDeleteProduct(product: IProductActionDelete) {
-        dispatch(deleteProduct({ id: product.id}))
+        dispatch(deleteProduct({ id: product.id }))
     }
 
     return (
@@ -63,7 +88,7 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                             <div key={product.id} className="flex flex-col items-center mb-10">
                                 <div className="w-full overflow-hidden">
                                     <Link className="" href={`/product/${product.id}`}>
-                                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
+                                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
                                     </Link>
                                 </div>
                                 <div>
