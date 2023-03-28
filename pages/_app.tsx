@@ -6,7 +6,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { useEffect, useState } from 'react'
 import { Router } from 'next/router'
 import Layout from '@/components/Layout'
-import { saveToLocalStorage } from '@/store/slices/cartSlice'
 export default function App({ Component, pageProps }: AppProps) {
 
   const [loading, setLoading] = useState(false)
