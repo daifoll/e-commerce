@@ -10,7 +10,6 @@ const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 );
 
-
 export default function Cart() {
     const cartProducts: ICartState = useSelector((state) => state) as ICartState
     const dispatch = useDispatch()

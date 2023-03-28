@@ -66,12 +66,20 @@ export const cartSlice = createSlice({
                 state.totalCount -= state.products[index].quantity
                 state.products.splice(index, 1)
             }
+        },
+
+        clearCart: (state) => {
+
+            // Очистка корзины
+            state.products = [];
+            state.total = 0;
+            state.totalCount = 0;
         }
     }
 })
 
 
-export const { addToCart, incrementQuantityCount, decrementQuantityCount, deleteProduct } = cartSlice.actions
+export const { addToCart, incrementQuantityCount, decrementQuantityCount, deleteProduct, clearCart } = cartSlice.actions
 
 export const selectCartProducts = (state: RootState) => state
 

@@ -11,8 +11,7 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
 
   function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
     const catName = e.currentTarget.alt.toLocaleLowerCase()
-
-
+    
     e.currentTarget.src = './stubimg/notfound.png'
     e.currentTarget.alt = 'not found'
     
