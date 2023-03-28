@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { SyntheticEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { IoIosAdd } from "react-icons/io"
+import Sort from "@/components/Sort"
 
 export default function Category({ categoryProducts, catId }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()

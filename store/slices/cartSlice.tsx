@@ -66,22 +66,12 @@ export const cartSlice = createSlice({
                 state.totalCount -= state.products[index].quantity
                 state.products.splice(index, 1)
             }
-        },
-
-        saveToLocalStorage: (state) => {
-            if (state.products.length) {
-                localStorage.setItem('cart', JSON.stringify(state))
-            }
-        },
-
-        loadFromLocalStorage: (state) => {
-            JSON.stringify(window.localStorage.getItem('cart'))
         }
     }
 })
 
 
-export const { addToCart, incrementQuantityCount, decrementQuantityCount, deleteProduct, saveToLocalStorage } = cartSlice.actions
+export const { addToCart, incrementQuantityCount, decrementQuantityCount, deleteProduct } = cartSlice.actions
 
 export const selectCartProducts = (state: RootState) => state
 
