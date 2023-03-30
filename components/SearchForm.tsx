@@ -8,10 +8,12 @@ export default function SearchForm() {
     function handleSubmitSearch(event: FormEvent) {
         event.preventDefault()
 
-        Router.push({
-            pathname: `/search`,
-            query: { byTitle, page: '0' }
-        })
+        if (byTitle !== '') {
+            Router.push({
+                pathname: `/search`,
+                query: { byTitle, page: '0', sort: 'default' }
+            })
+        }
     }
     return (
         <div className="max-w-full flex">
@@ -33,7 +35,7 @@ export default function SearchForm() {
                         focus:outline-none
                     "
                 />
-                <button type="submit" className="absolute right-[7%] top-[22%] text-2xl"><AiOutlineSearch/></button>
+                <button type="submit" className="absolute right-[7%] top-[22%] text-2xl"><AiOutlineSearch /></button>
             </form>
         </div>
     )

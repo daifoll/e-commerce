@@ -21,7 +21,7 @@ export default function Header() {
             <Link className='text-stone-50 hover:text-black text-3xl flex items-center' href={'/cart'}>
               <BsCart4 />
             </Link>
-            <span className='text-lg font-medium text-white absolute top-[-30%] right-[-3%]'>{cartProducts.totalCount}</span>
+            <span className='text-lg font-medium text-white absolute top-[-30%] right-[-3%]'>{cartProducts.cartReducer.totalCount}</span>
           </li>
         </ul>
       </nav>

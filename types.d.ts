@@ -32,9 +32,16 @@ declare interface ISearchForm {
     handleSubmitSearch(event: FormEvent): void
 }
 
+// Редьюсер добавляемый redux-presist
+declare interface cartReducer {
+    products: IProductAction[];
+    total: number;
+    totalCount: number;
+}
 // initialState для cartSlice
 declare interface ICartState {
     products: IProductAction[];
+    cartReducer: cartReducer,
     total: number;
     totalCount: number;
 }
@@ -48,6 +55,14 @@ declare interface IProductAction {
     image: string;
     quantity: number;
     inCart: boolean;
+}
+
+// SearchMarkup
+declare interface ISearchMarkUp {
+    product: IProduct;
+    // hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>): void;
+    // handleClickDeleteProduct(product: IProductActionDelete): void;
+    // handleClickAddToCart({ id, title, price, totalPrice, image, quantity }: IProductAction): void;
 }
 
 // Action (redux) для функций увлеичения и уменьшения кол-ва товара

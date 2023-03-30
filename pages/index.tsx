@@ -9,35 +9,33 @@ import { SyntheticEvent } from "react"
 export default function Home({ categories }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter()
 
-  function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>, catName: string) {
-    console.log(catName)
-    switch (`${catName.toLowerCase()}`) {
+  function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
+    const catName = e.currentTarget.alt.toLocaleLowerCase()
+    
+    e.currentTarget.src = './stubimg/notfound.png'
+    e.currentTarget.alt = 'not found'
+    
+    switch (catName) {
       case 'clothes':
-        e.currentTarget.src = '/stubimg/clothes.jpg'
-        e.currentTarget.alt = 'Clothes Category'
-        break
-      case 'shoes':
-        e.currentTarget.src = '/stubimg/shoes.jpg'
-        e.currentTarget.alt = 'Shoes Category'
+        e.currentTarget.src = './stubimg/clothes.jpg'
         break
       case 'electronics':
-        e.currentTarget.src = '/stubimg/electronics.jpg'
-        e.currentTarget.alt = 'Electronics Category'
-        break
-      case 'others':
-        e.currentTarget.src = '/stubimg/others.jpg'
-        e.currentTarget.alt = 'Others Category'
+        e.currentTarget.src = './stubimg/electronics.jpg'
         break
       case 'furniture':
-        e.currentTarget.src = '/stubimg/furniture.jpg'
-        e.currentTarget.alt = 'Furniture Category'
+        e.currentTarget.src = './stubimg/furniture.jpg'
+        break
+      case 'shoes':
+        e.currentTarget.src = './stubimg/shoes.jpg'
+        break
+      case 'others':
+        e.currentTarget.src = './stubimg/others.jpg'
         break
       default:
-        e.currentTarget.src = '/stubimg/imageNotFound.png'
-        e.currentTarget.alt = 'Category image not found'
+        e.currentTarget.src = './stubimg/notfound.png'
+        e.currentTarget.alt = 'not found'
         break
     }
-
   }
 
   return (
@@ -53,7 +51,7 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
                 return <div key={cat.id} className="basis-1/2 p-1 mt-5">
                   <Link href={`/category/${cat.id}/1`} className="uppercase text-lg">{cat.name}</Link>
                   <div className="w-full flex overflow-hidden">
-                    <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/1`}><img className="w-full h-64 object-cover" src={cat.image} onError={(e) => hanlerOnErrorImage(e, cat.name)} alt={cat.name} /></Link>
+                    <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/1`}><img className="w-full h-64 object-cover" src = {cat.image} onError={(e) => hanlerOnErrorImage(e)} alt={cat.name} /></Link>
                   </div>
                 </div>
               }

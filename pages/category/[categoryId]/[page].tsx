@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { SyntheticEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { IoIosAdd } from "react-icons/io"
+import Sort from "@/components/Sort"
 
 export default function Category({ categoryProducts, catId }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()
@@ -14,8 +14,32 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
     const dispatch = useDispatch()
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
-        e.currentTarget.src = '/stubimg/imageNotFound.png'
-        e.currentTarget.alt = 'Product image not found'
+        const catName = e.currentTarget.alt.toLocaleLowerCase()
+        
+        e.currentTarget.src = './stubimg/notfound.png'
+        e.currentTarget.alt = 'not found'
+        
+        switch (catName) {
+            case 'clothes':
+                e.currentTarget.src = './stubimg/clothes.jpg'
+                break
+            case 'electronics':
+                e.currentTarget.src = './stubimg/electronics.jpg'
+                break
+            case 'furniture':
+                e.currentTarget.src = './stubimg/furniture.jpg'
+                break
+            case 'shoes':
+                e.currentTarget.src = './stubimg/shoes.jpg'
+                break
+            case 'others':
+                e.currentTarget.src = './stubimg/others.jpg'
+                break
+            default:
+                e.currentTarget.src = './stubimg/notfound.png'
+                e.currentTarget.alt = 'not found'
+                break
+        }
     }
 
     const [pageCount, setPageCount] = useState<number[]>([])
@@ -45,13 +69,13 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
     }, [])
 
 
-    function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1}: IProductAction) {
-        dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity, inCart: true}))
+    function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1 }: IProductAction) {
+        dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity, inCart: true }))
 
     }
 
     function handleClickDeleteProduct(product: IProductActionDelete) {
-        dispatch(deleteProduct({ id: product.id}))
+        dispatch(deleteProduct({ id: product.id }))
     }
 
     return (
@@ -64,7 +88,7 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                             <div key={product.id} className="flex flex-col items-center mb-10">
                                 <div className="w-full overflow-hidden">
                                     <Link className="" href={`/product/${product.id}`}>
-                                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} alt={product.title} onError={(e) => hanlerOnErrorImage(e)} />
+                                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
                                     </Link>
                                 </div>
                                 <div>
@@ -73,7 +97,7 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
                                     <p className="text-lg mt-4 min-h-[80px]">{product.description}</p>
                                     <div className="mt-4"><span className="text-2xl font-semibold">{product.price}$</span></div>
                                     {
-                                        cartProducts.products.filter((cartProduct: IProductAction) => cartProduct.id === product.id)[0] ?
+                                        cartProducts.cartReducer?.products.filter((cartProduct: IProductAction) => cartProduct.id === product.id)[0] ?
                                             <button className="text-base mt-4 p-2 font-semibold uppercase bg-red-400 hover:bg-red-300 text-white rounded-full" onClick={() => handleClickDeleteProduct(product)}>
                                                 Удалить из корзины
                                             </button>

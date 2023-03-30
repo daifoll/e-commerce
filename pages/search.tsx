@@ -1,26 +1,36 @@
 import Layout from "@/components/Layout"
+import SearchMarkup from "@/components/SearchMarkup"
+import Sort from "@/components/Sort"
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { SyntheticEvent, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 
 export default function Search({ searchedProducts, allProductsBySearch }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const router = useRouter()
+
+    // Ключ:значение query параметра byTitle
     const byTitle = Object.entries(router.query)[0]
+
+    // Ключ:значение query параметра page
     const pageArr = Object.entries(router.query)[1]
 
-    function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
-        e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
-    }
-
-    // console.log(byTitle, pageArr)
-    console.log('Выводится на страницу', searchedProducts, 'Всего найдено:', allProductsBySearch)
+    // Ключ:значение query параметра sortBy
+    const sortBy = Object.entries(router.query)[2]
 
 
+    // Массив кол-ва страниц
     const [pageCount, setPageCount] = useState<number[]>([])
 
+    // Стейт для сортировки по цене
+    const [sortedByPriceProducts, setSortedByPriceProducts] = useState(searchedProducts)
+    
+    // Название query параметра sortBy
+    const [sortTitle, setSortTitle] = useState(router.query.sortBy)
 
+
+    // Генерируем кнопки страниц при загрузке страниц
     useEffect(() => {
 
         const pagesCountNum = Math.round(allProductsBySearch.length / 10)
@@ -32,47 +42,68 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
         }
         setPageCount([...pagesCountArr])
 
-
-
     }, [])
 
     return (
         <Layout>
-            <h1>Найденные товары по запросу: {router.query.byTitle}</h1>
-            <div className="flex flex-wrap">
+            {
+                searchedProducts.length ?
+                    <h1 className="text-2xl">Найденные товары по запросу: "{router.query.byTitle}"</h1>
+                    :
+                    <h1 className="text-2xl">По запросу: "{router.query.byTitle}" ничего не найдено.</h1>
+            }
+
+            {
+                // Сортировка товаров
+                <Sort />
+            }
+
+
+            <div className="flex flex-wrap mt-5">
                 {
-                    searchedProducts.map((product: IProduct) =>
-                        <div key={product.id} className="basis-1/3">
-                            <div className="flex flex-col items-center mb-10" key={product.id}>
-                                <div className="w-80">
-                                    <img className="w-full h-64 object-cover" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
-                                </div>
-                                <div>
-                                    <div><span>{product.category.name}</span></div>
-                                    <div><Link href={`/product/${product.id}`}><strong>{product.title}</strong></Link></div>
-                                    <p>{product.description}</p>
-                                    <button>BUY</button>
-                                    <button>ADD TO CART</button>
-                                </div>
-                            </div>
-                        </div>
-                    )
+                    // Сортировка цены по возрастанию
+                    sortTitle === 'lowtohigh' ?
+                        sortedByPriceProducts.sort((productA, productB) => { return productA.price - productB.price }).map((product: IProduct) =>
+                            
+                            // Разметка найденных товаров
+                            <SearchMarkup product={product} key={product.id}/>
+                        )
+                        :
+
+                        // Сортировка цены по убыванию
+                        sortTitle === 'hightolow' ?
+                            sortedByPriceProducts.sort((productB, productA) => { return productA.price - productB.price }).map((product: IProduct) =>
+                                
+                                // Разметка найденных товаров
+                                <SearchMarkup product={product} key={product.id} />
+                            )
+                            :
+
+                            // Без сортировки (default)
+                            sortedByPriceProducts.map((product: IProduct) =>
+                                
+                                // Разметка найденных товаров
+                                <SearchMarkup product={product} key={product.id}/>
+                            )
                 }
             </div>
+            <div className="pt-9">
+                {
+                    pageCount.map(page => {
+                        return <Link key={page} className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/search/?${byTitle[0]}=${byTitle[1]}&${pageArr[0]}=${page}&${sortBy[0]}=${sortBy[1]}`}>{page + 1}</Link>
+                    })
 
-            {
-                pageCount.map(page => {
-                    return <Link key={page} className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/search/?${byTitle[0]}=${byTitle[1]}&${pageArr[0]}=${page}`}>{page + 1}</Link>
-                })
-            }
+                }
 
-            {
-                pageCount.length > 1 ?
-                    <Link className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/search/?${byTitle[0]}=${byTitle[1]}&${pageArr[0]}=${Number(router.query.page) + 1 > pageCount.length - 1 ? pageCount.length - 1 : Number(router.query.page) + 1}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
-                    :
-                    null
-            }
-        </Layout>
+                {
+                    pageCount.length > 0 ?
+                        <Link className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/search/?${byTitle[0]}=${byTitle[1]}&${pageArr[0]}=${Number(router.query.page) + 1 > pageCount.length - 1 ? pageCount.length - 1 : Number(router.query.page) + 1}&${sortBy[0]}=${sortBy[1]}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
+                        :
+                        null
+                }
+
+            </div>
+        </Layout >
     )
 }
 
