@@ -1,3 +1,4 @@
+import ErrorFetch from "@/components/ErrorFetch"
 import Layout from "@/components/Layout"
 import SearchForm from "@/components/SearchForm"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
@@ -6,15 +7,15 @@ import Router, { useRouter } from "next/router"
 import { SyntheticEvent } from "react"
 
 
-export default function Home({ categories }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({ categories, error }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter()
 
   function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
     const catName = e.currentTarget.alt.toLocaleLowerCase()
-    
+
     e.currentTarget.src = './stubimg/notfound.png'
     e.currentTarget.alt = 'not found'
-    
+
     switch (catName) {
       case 'clothes':
         e.currentTarget.src = './stubimg/clothes.jpg'
@@ -41,22 +42,24 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
   return (
     <Layout>
       <div>
-        <h1 className="text-3xl font-medium uppercase">Выберите категорию</h1>
+        {error ? '' : <h1 className="text-3xl font-medium uppercase">Выберите категорию</h1>}
         <div className="flex flex-wrap mt-4">
           {
-            categories.map((cat: ICategory, index) => {
-              if (index > 4) {
-                return null
-              } else {
-                return <div key={cat.id} className="basis-1/2 p-1 mt-5">
-                  <Link href={`/category/${cat.id}/1?sortBy=default`} className="uppercase text-lg">{cat.name}</Link>
-                  <div className="w-full flex overflow-hidden">
-                    <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/1?sortBy=default`}><img className="w-full h-64 object-cover" src = {cat.image} onError={(e) => hanlerOnErrorImage(e)} alt={cat.name} /></Link>
+            error ? <ErrorFetch error={error} />
+              :
+              categories.map((cat: ICategory, index) => {
+                if (index > 4) {
+                  return null
+                } else {
+                  return <div key={cat.id} className="basis-1/2 p-1 mt-5">
+                    <Link href={`/category/${cat.id}/1?sortBy=default`} className="uppercase text-lg">{cat.name}</Link>
+                    <div className="w-full flex overflow-hidden">
+                      <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/1?sortBy=default`}><img className="w-full h-64 object-cover" src={cat.image} onError={(e) => hanlerOnErrorImage(e)} alt={cat.name} /></Link>
+                    </div>
                   </div>
-                </div>
+                }
               }
-            }
-            )
+              )
           }
         </div>
       </div>
@@ -65,11 +68,30 @@ export default function Home({ categories }: InferGetStaticPropsType<typeof getS
 }
 
 
-export const getStaticProps: GetStaticProps<{ categories: ICategory[] }> = async () => {
-  const catRes = await fetch(`https://api.escuelajs.co/api/v1/categories`)
-  const categories = await catRes.json()
+export const getStaticProps: GetStaticProps<{ categories: ICategory[], error: string }> = async () => {
+  const res = await fetch(`https://api.escuelajs.co/api/v1/categories`)
 
-  return {
-    props: { categories }
+  let error = ''
+
+  if (!res.ok) {  // Если возникла ошибка
+    
+    error = `Возникла ошибка: ${res.status}`
+
+    return {
+      props: { categories: [], error }
+    }
+  } else if (res.status === 404) { // Если 404 ошибка
+
+    return {
+      notFound: true
+    }
+
+  } else { // Если ошибок нет
+    
+    const categories = await res.json()
+
+    return {
+      props: { categories, error }
+    }
   }
 }

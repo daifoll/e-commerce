@@ -6,42 +6,14 @@ import { useRouter } from "next/router"
 import { SyntheticEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Sort from "@/components/Sort"
-import SearchMarkup from "@/components/SearchMarkup"
+import SearchMarkup from "@/components/ProductsMarkup"
+import ProductsMarkup from "@/components/ProductsMarkup"
+import ErrorFetch from "@/components/ErrorFetch"
 
-export default function Category({ categoryProducts, catId }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Category({ categoryProducts, catId, error }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()
     const cartProducts = useSelector(state => state) as ICartState
     const dispatch = useDispatch()
-
-
-    function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
-        const catName = e.currentTarget.alt.toLocaleLowerCase()
-
-        e.currentTarget.src = './stubimg/notfound.png'
-        e.currentTarget.alt = 'not found'
-
-        switch (catName) {
-            case 'clothes':
-                e.currentTarget.src = './stubimg/clothes.jpg'
-                break
-            case 'electronics':
-                e.currentTarget.src = './stubimg/electronics.jpg'
-                break
-            case 'furniture':
-                e.currentTarget.src = './stubimg/furniture.jpg'
-                break
-            case 'shoes':
-                e.currentTarget.src = './stubimg/shoes.jpg'
-                break
-            case 'others':
-                e.currentTarget.src = './stubimg/others.jpg'
-                break
-            default:
-                e.currentTarget.src = './stubimg/notfound.png'
-                e.currentTarget.alt = 'not found'
-                break
-        }
-    }
 
     const [pageCount, setPageCount] = useState<number[]>([])
 
@@ -71,96 +43,119 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
 
     }, [])
 
-
-    function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1 }: IProductAction) {
-        dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity, inCart: true }))
-
-    }
-
-    function handleClickDeleteProduct(product: IProductActionDelete) {
-        dispatch(deleteProduct({ id: product.id }))
-    }
-
     return (
-        <Layout>
-            <h1 className="text-3xl font-medium uppercase my-4">{categoryProducts[0].category.name}</h1>
-            <Sort route={router.route} />
-            <div className="flex flex-wrap">
-                {
-                    // Сортировка цены по возрастанию
-                    sortTitle === 'lowtohigh' ?
-                        categoryProducts.sort((productA, productB) => { return productA.price - productB.price }).map((product: IProduct) =>
+        error ?
+            <Layout>
+                <ErrorFetch error={error} />
+            </Layout>
 
-                            // Разметка найденных товаров
-                            <SearchMarkup product={product} key={product.id} />
-                        )
-                        :
+            :
 
-                        // Сортировка цены по убыванию
-                        sortTitle === 'hightolow' ?
-                            categoryProducts.sort((productB, productA) => { return productA.price - productB.price }).map((product: IProduct) =>
+            <Layout>
+                <h1 className="text-3xl font-medium uppercase my-4">{categoryProducts[0].category.name}</h1>
+                <Sort route={router.route} />
+                <div className="flex flex-wrap">
+                    {
+                        // Сортировка цены по возрастанию
+                        sortTitle === 'lowtohigh' ?
+                            categoryProducts.sort((productA, productB) => { return productA.price - productB.price }).map((product: IProduct) =>
 
                                 // Разметка найденных товаров
-                                <SearchMarkup product={product} key={product.id} />
+                                <ProductsMarkup product={product} key={product.id} />
                             )
                             :
 
-                            // Без сортировки (default)
-                            categoryProducts.map((product: IProduct) =>
+                            // Сортировка цены по убыванию
+                            sortTitle === 'hightolow' ?
+                                categoryProducts.sort((productB, productA) => { return productA.price - productB.price }).map((product: IProduct) =>
 
-                                // Разметка найденных товаров
-                                <SearchMarkup product={product} key={product.id} />
-                            )
-                }
+                                    // Разметка найденных товаров
+                                    <ProductsMarkup product={product} key={product.id} />
+                                )
+                                :
 
-            </div>
+                                // Без сортировки (default)
+                                categoryProducts.map((product: IProduct) =>
 
-            <div className="pt-9">
-                {
-                    pageCount.map(page => {
-                        return <Link key={page} className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageCountPath}>{page + 1}</Link>
-                    })
+                                    // Разметка найденных товаров
+                                    <ProductsMarkup product={product} key={product.id} />
+                                )
+                    }
 
-                }
+                </div>
 
-                {
-                    pageCount.length > 0 ?
-                        <Link className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageNextBtnPath}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
-                        :
-                        null
-                }
+                <div className="pt-9">
+                    {
+                        pageCount.map(page => {
+                            return <Link key={page} className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageCountPath}>{page + 1}</Link>
+                        })
 
-            </div>
-        </Layout>
+                    }
+
+                    {
+                        pageCount.length > 0 ?
+                            <Link className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageNextBtnPath}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
+                            :
+                            null
+                    }
+
+                </div>
+            </Layout>
     )
 }
 
 
 export async function getStaticPaths() {
     const res = await fetch('https://api.escuelajs.co/api/v1/categories')
-    const categories = await res.json()
 
-    const paths = categories.flatMap((category: ICategory, index: number) => {
-        const categoryPages = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    if (!res.ok) {
+        return { paths: [], fallback: false }
 
-        return categoryPages.map(page => ({
-            params: {
-                categoryId: category.id.toString(),
-                page: page.toString()
-            }
-        }))
-    })
+    } else {
+        const categories = await res.json()
+
+        const paths = categories.flatMap((category: ICategory, index: number) => {
+            const categoryPages = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+            return categoryPages.map(page => ({
+                params: {
+                    categoryId: category.id.toString(),
+                    page: page.toString()
+                }
+            }))
+        })
 
 
-    return { paths, fallback: false }
+        return { paths, fallback: false }
+    }
 }
 
-export const getStaticProps: GetStaticProps<{ categoryProducts: IProduct[], catId: string }> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<{ categoryProducts: IProduct[], catId: string, error: string }> = async ({ params }) => {
+
     const res = await fetch(`https://api.escuelajs.co/api/v1/categories/${params?.categoryId}/products?offset=${params?.page}0&limit=10`)
-    const categoryProducts = await res.json()
 
 
-    return {
-        props: { categoryProducts, catId: params?.categoryId as string }
+    let error = ''
+
+    if (!res.ok) {  // Если возникла ошибка
+        
+        error = `${res.status} (${res.statusText})`
+
+        return {
+            props: { categoryProducts: [], catId: params?.categoryId as string, error }
+        }
+    }else if (res.status === 404) { // Если 404 ошибка
+
+        return {
+            notFound: true
+        }
+
+    }else { // Если ошибок нет
+
+        const categoryProducts = await res.json()
+
+        return {
+            props: { categoryProducts, catId: params?.categoryId as string, error }
+        }
     }
 }

@@ -84,5 +84,10 @@ declare interface ISort {
     route: string;
 }
 
+// ErrorFetch
+declare interface IErrorFetch {
+    error: string
+}
+
 // Картинки продукта
 declare type IImageProduct = string[]

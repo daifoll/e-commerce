@@ -5,11 +5,11 @@ import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import React, { SyntheticEvent } from 'react'
 import { addToCart, deleteProduct, selectCartProducts } from '@/store/slices/cartSlice'
+import ErrorFetch from '@/components/ErrorFetch'
 
-export default function Product({ product }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Product({ product, error }: InferGetStaticPropsType<typeof getStaticProps>) {
     const cartProducts = useSelector(state => state) as ICartState
     const dispatch = useDispatch()
-    console.log(cartProducts)
 
     function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1 }: IProductAction) {
         dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity, inCart: true }))
@@ -17,15 +17,15 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
     }
 
     function handleClickDeleteProduct(product: IProductActionDelete) {
-        dispatch(deleteProduct({ id: product.id}))
+        dispatch(deleteProduct({ id: product.id }))
     }
 
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
         const catName = e.currentTarget.alt.toLocaleLowerCase()
-        
+
         e.currentTarget.src = './stubimg/notfound.png'
         e.currentTarget.alt = 'not found'
-        
+
         switch (catName) {
             case 'clothes':
                 e.currentTarget.src = './stubimg/clothes.jpg'
@@ -50,34 +50,39 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
     }
 
     return (
-        <Layout>
-            <div>
-                <div className="flex basis-1/2" key={product.id}>
-                    <div className="w-[65%] flex flex-wrap justify-center">
-                        <img className="basis-full h-72 object-cover object-center" src={product.images[0]} alt={product.category.name}  onError={(e) => hanlerOnErrorImage(e)} />
-                        <img className="basis-1/2 w-20 h-56 object-cover" src={product.images[1]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
-                        <img className="basis-1/2 w-20 h-56 object-cover" src={product.images[2]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
-                    </div>
-                    <div className='ml-6'>
-                        <div className="text-lg mt-4"><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
-                        <div className="text-xl"><strong>{product.title}</strong></div>
-                        <p className="text-lg mt-4 min-h-[80px]">{product.description}</p>
-                        <div className="mt-1"><span className="text-2xl font-semibold">{product.price}$</span></div>
-                        {
-                            cartProducts.cartReducer.products.filter((cartProduct: IProductAction) => cartProduct.id === product.id)[0] ?
-                                <button className="text-base mt-4 p-2 font-semibold uppercase bg-red-400 hover:bg-red-300 text-white rounded-full" onClick={() => handleClickDeleteProduct(product)}>
-                                    Удалить из корзины
-                                </button>
-                                :
-                                <button className="text-base mt-4 p-2 font-semibold uppercase bg-primal hover:bg-green-400 text-white rounded-full" onClick={() => handleClickAddToCart({ id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1, inCart: true })}>
-                                    Добавить в корзину
-                                </button>
-                        }
+        error ?
+            <Layout>
+                <ErrorFetch error={error} />
+            </Layout>
+            :
+            <Layout>
+                <div>
+                    <div className="flex basis-1/2" key={product.id}>
+                        <div className="w-[65%] flex flex-wrap justify-center">
+                            <img className="basis-full h-72 object-cover object-center" src={product.images[0]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
+                            <img className="basis-1/2 w-20 h-56 object-cover" src={product.images[1]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
+                            <img className="basis-1/2 w-20 h-56 object-cover" src={product.images[2]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
+                        </div>
+                        <div className='ml-6'>
+                            <div className="text-lg mt-4"><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
+                            <div className="text-xl"><strong>{product.title}</strong></div>
+                            <p className="text-lg mt-4 min-h-[80px]">{product.description}</p>
+                            <div className="mt-1"><span className="text-2xl font-semibold">{product.price}$</span></div>
+                            {
+                                cartProducts.cartReducer.products.filter((cartProduct: IProductAction) => cartProduct.id === product.id)[0] ?
+                                    <button className="text-base mt-4 p-2 font-semibold uppercase bg-red-400 hover:bg-red-300 text-white rounded-full" onClick={() => handleClickDeleteProduct(product)}>
+                                        Удалить из корзины
+                                    </button>
+                                    :
+                                    <button className="text-base mt-4 p-2 font-semibold uppercase bg-primal hover:bg-green-400 text-white rounded-full" onClick={() => handleClickAddToCart({ id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1, inCart: true })}>
+                                        Добавить в корзину
+                                    </button>
+                            }
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Layout>
+            </Layout>
     )
 }
 
@@ -85,23 +90,48 @@ export default function Product({ product }: InferGetStaticPropsType<typeof getS
 
 export async function getStaticPaths() {
     const res = await fetch('https://api.escuelajs.co/api/v1/products')
-    const products = await res.json()
 
+    if (!res.ok) {
+        return { paths: [], fallback: false }
+    } else {
+        const products = await res.json()
 
-    const paths = products.map((product: IProduct) => ({
-        params: { id: product.id.toString() },
-    }))
+        const paths = products.map((product: IProduct) => ({
+            params: { id: product.id.toString() },
+        }))
 
-    return { paths, fallback: false }
+        return { paths, fallback: false }
+    }
 }
 
-export const getStaticProps: GetStaticProps<{ product: IProduct }> = async ({ params }) => {
-    // const id = params?.id!
-
+export const getStaticProps: GetStaticProps<{ product: IProduct, error: string }> = async ({ params }) => {
     const res = await fetch(`https://api.escuelajs.co/api/v1/products/${params?.id}`)
-    const product = await res.json()
 
-    return {
-        props: { product }
+    let error = ''
+
+    if (!res.ok) { // Если возникла ошибка
+
+        error = `${res.status} | ${res.statusText}`
+
+        return {
+            props: {
+                product: {},
+                error
+            }
+        }
+    }else if (res.status === 404) { // Если 404 ошибка
+
+        return {
+            notFound: true
+        }
+
+    }else { // Если ошибок нет
+        
+        const product = await res.json()
+
+        return {
+            props: { product, error }
+        }
     }
+
 }

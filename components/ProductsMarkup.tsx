@@ -4,7 +4,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SyntheticEvent } from "react"
 
-export default function SearchMarkup({product}: ISearchMarkUp ) {
+export default function ProductsMarkup({product}: ISearchMarkUp ) {
 
     // Продукты добавленные в карзину
     const cartProducts = useSelector(state => state) as ICartState
@@ -12,7 +12,32 @@ export default function SearchMarkup({product}: ISearchMarkUp ) {
     
     // Установка заглушки при ошибке загрузки страницы
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
-        e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'
+        const catName = e.currentTarget.alt.toLocaleLowerCase()
+
+        e.currentTarget.src = './stubimg/notfound.png'
+        e.currentTarget.alt = 'not found'
+
+        switch (catName) {
+            case 'clothes':
+                e.currentTarget.src = './stubimg/clothes.jpg'
+                break
+            case 'electronics':
+                e.currentTarget.src = './stubimg/electronics.jpg'
+                break
+            case 'furniture':
+                e.currentTarget.src = './stubimg/furniture.jpg'
+                break
+            case 'shoes':
+                e.currentTarget.src = './stubimg/shoes.jpg'
+                break
+            case 'others':
+                e.currentTarget.src = './stubimg/others.jpg'
+                break
+            default:
+                e.currentTarget.src = './stubimg/notfound.png'
+                e.currentTarget.alt = 'not found'
+                break
+        }
     }
 
 
