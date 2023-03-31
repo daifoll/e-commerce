@@ -26,7 +26,7 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
     // Стейт для сортировки по цене
     const [sortedByPriceProducts, setSortedByPriceProducts] = useState(searchedProducts)
     
-    // Название query параметра sortBy
+    // Название-query параметра sortBy
     const [sortTitle, setSortTitle] = useState(router.query.sortBy)
 
 
@@ -55,7 +55,7 @@ export default function Search({ searchedProducts, allProductsBySearch }: InferG
 
             {
                 // Сортировка товаров
-                <Sort />
+                <Sort route={router.route}/>
             }
 
 

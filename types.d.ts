@@ -79,5 +79,10 @@ declare interface IProductActionGetTotalPrice {
     id: number;
 }
 
+// Sort
+declare interface ISort {
+    route: string;
+}
+
 // Картинки продукта
 declare type IImageProduct = string[]

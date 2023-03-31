@@ -6,19 +6,20 @@ import { useRouter } from "next/router"
 import { SyntheticEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Sort from "@/components/Sort"
+import SearchMarkup from "@/components/SearchMarkup"
 
 export default function Category({ categoryProducts, catId }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()
-
     const cartProducts = useSelector(state => state) as ICartState
     const dispatch = useDispatch()
 
+
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
         const catName = e.currentTarget.alt.toLocaleLowerCase()
-        
+
         e.currentTarget.src = './stubimg/notfound.png'
         e.currentTarget.alt = 'not found'
-        
+
         switch (catName) {
             case 'clothes':
                 e.currentTarget.src = './stubimg/clothes.jpg'
@@ -44,9 +45,11 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
 
     const [pageCount, setPageCount] = useState<number[]>([])
 
-    const categoryPageCountPath = `/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1}`
-    const categoryPageNextBtnPath = `/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1}`
+    const categoryPageCountPath = `/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`
+    const categoryPageNextBtnPath = `/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`
 
+    // Название query-параметра sortBy
+    const [sortTitle, setSortTitle] = useState(router.query.sortBy)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -81,36 +84,33 @@ export default function Category({ categoryProducts, catId }: InferGetStaticProp
     return (
         <Layout>
             <h1 className="text-3xl font-medium uppercase my-4">{categoryProducts[0].category.name}</h1>
+            <Sort route={router.route} />
             <div className="flex flex-wrap">
                 {
-                    categoryProducts.map((product: IProduct) =>
-                        <div key={product.id} className="basis-1/3 p-2">
-                            <div key={product.id} className="flex flex-col items-center mb-10">
-                                <div className="w-full overflow-hidden">
-                                    <Link className="" href={`/product/${product.id}`}>
-                                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
-                                    </Link>
-                                </div>
-                                <div>
-                                    <div className="text-lg mt-4"><span>{product.category.name}</span></div>
-                                    <div className="text-xl"><Link href={`/product/${product.id}`}><strong>{product.title}</strong></Link></div>
-                                    <p className="text-lg mt-4 min-h-[80px]">{product.description}</p>
-                                    <div className="mt-4"><span className="text-2xl font-semibold">{product.price}$</span></div>
-                                    {
-                                        cartProducts.cartReducer?.products.filter((cartProduct: IProductAction) => cartProduct.id === product.id)[0] ?
-                                            <button className="text-base mt-4 p-2 font-semibold uppercase bg-red-400 hover:bg-red-300 text-white rounded-full" onClick={() => handleClickDeleteProduct(product)}>
-                                                Удалить из корзины
-                                            </button>
-                                            :
-                                            <button className="text-base mt-4 p-2 font-semibold uppercase bg-primal hover:bg-green-400 text-white rounded-full" onClick={() => handleClickAddToCart({ id: product.id, title: product.title, price: product.price, totalPrice: product.price, image: product.images[0], quantity: 1, inCart: true })}>
-                                                Добавить в корзину
-                                            </button>
-                                    }
+                    // Сортировка цены по возрастанию
+                    sortTitle === 'lowtohigh' ?
+                        categoryProducts.sort((productA, productB) => { return productA.price - productB.price }).map((product: IProduct) =>
 
-                                </div>
-                            </div>
-                        </div>
-                    )
+                            // Разметка найденных товаров
+                            <SearchMarkup product={product} key={product.id} />
+                        )
+                        :
+
+                        // Сортировка цены по убыванию
+                        sortTitle === 'hightolow' ?
+                            categoryProducts.sort((productB, productA) => { return productA.price - productB.price }).map((product: IProduct) =>
+
+                                // Разметка найденных товаров
+                                <SearchMarkup product={product} key={product.id} />
+                            )
+                            :
+
+                            // Без сортировки (default)
+                            categoryProducts.map((product: IProduct) =>
+
+                                // Разметка найденных товаров
+                                <SearchMarkup product={product} key={product.id} />
+                            )
                 }
 
             </div>
