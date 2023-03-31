@@ -17,7 +17,6 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
 
     const [pageCount, setPageCount] = useState<number[]>([])
 
-    const categoryPageCountPath = `/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`
     const categoryPageNextBtnPath = `/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 1 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`
 
     // Название query-параметра sortBy
@@ -87,14 +86,50 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
                 <div className="pt-9">
                     {
                         pageCount.map(page => {
-                            return <Link key={page} className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageCountPath}>{page + 1}</Link>
+                            return <Link key={page} className="
+                            px-3 
+                            bg-primal 
+                            text-white text-xl 
+                            py-2 mr-1 
+                            leading-tight 
+                            border 
+                            border-primal 
+                            rounded-l-lg 
+                            hover:bg-white
+                            hover:text-gray-700 
+                            dark:bg-gray-800 
+                            dark:border-gray-700
+                            dark:text-gray-400 
+                            dark:hover:bg-gray-700 
+                            dark:hover:text-white" 
+                            
+                            href={`/category/${catId}/${page}/?sortBy=${router.query.sortBy}`}>{page + 1}</Link>
                         })
 
                     }
 
                     {
                         pageCount.length > 0 ?
-                            <Link className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={categoryPageNextBtnPath}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
+                            <Link className="
+                            px-3 
+                            bg-primal 
+                            text-white 
+                            text-xl 
+                            py-2 
+                            mr-1 
+                            leading-tight
+                            border 
+                            border-primal 
+                            rounded-l-lg 
+                            hover:bg-white 
+                            hover:text-gray-700 
+                            dark:bg-gray-800 
+                            dark:border-gray-700 
+                            dark:text-gray-400 
+                            dark:hover:bg-gray-700 
+                            dark:hover:text-white" 
+                            
+                            href={`/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 0 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
                             :
                             null
                     }
@@ -115,7 +150,7 @@ export async function getStaticPaths() {
         const categories = await res.json()
 
         const paths = categories.flatMap((category: ICategory, index: number) => {
-            const categoryPages = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            const categoryPages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
             return categoryPages.map(page => ({
                 params: {
@@ -132,25 +167,25 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps<{ categoryProducts: IProduct[], catId: string, error: string }> = async ({ params }) => {
 
-    const res = await fetch(`https://api.escuelajs.co/api/v1/categories/${params?.categoryId}/products?offset=${params?.page}0&limit=10`)
+    const res = await fetch(`https://api.escuelajs.co/api/v1/categories/${params?.categoryId}/products?offset=${params?.page === '0' ? '0' : params?.page + '0'}&limit=10`)
 
 
     let error = ''
 
     if (!res.ok) {  // Если возникла ошибка
-        
+
         error = `${res.status} (${res.statusText})`
 
         return {
             props: { categoryProducts: [], catId: params?.categoryId as string, error }
         }
-    }else if (res.status === 404) { // Если 404 ошибка
+    } else if (res.status === 404) { // Если 404 ошибка
 
         return {
             notFound: true
         }
 
-    }else { // Если ошибок нет
+    } else { // Если ошибок нет
 
         const categoryProducts = await res.json()
 
