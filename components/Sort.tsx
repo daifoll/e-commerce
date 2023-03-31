@@ -7,7 +7,7 @@ export default function Sort({ route }: ISort) {
     function sortByPrice(e: ChangeEvent<HTMLSelectElement>) {
         const value = e.target.value
 
-        if (value === 'lowtohigh' || value === 'hightolow') {
+        if (value === 'lowtohigh' || value === 'hightolow' || value === 'default') {
             e.preventDefault()
 
             if (route.includes('/search')) {
@@ -48,6 +48,7 @@ export default function Sort({ route }: ISort) {
         <div>
             <span>Sort By Price</span>
             <select onChange={(e) => sortByPrice(e)} value={router.query.sortBy}>
+                <option value="default">Без сортировки</option>
                 <option value="lowtohigh">Low to High</option>
                 <option value="hightolow">High to Low</option>
             </select>
