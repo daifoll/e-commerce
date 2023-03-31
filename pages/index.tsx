@@ -1,9 +1,8 @@
 import ErrorFetch from "@/components/ErrorFetch"
 import Layout from "@/components/Layout"
-import SearchForm from "@/components/SearchForm"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
 import Link from "next/link"
-import Router, { useRouter } from "next/router"
+import { useRouter } from "next/router"
 import { SyntheticEvent } from "react"
 
 

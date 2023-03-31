@@ -27,7 +27,7 @@ export default function Cart() {
                     images: [product.image]
 
                 },
-                unit_amount: product.price
+                unit_amount: product.price * 100
             },
             quantity: product.quantity
         }
