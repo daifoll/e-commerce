@@ -36,14 +36,10 @@ export default function App({ Component, pageProps }: AppProps) {
       if( url.includes('cart') ) {
         setLoaderComponent( <LoadingCart/> )
       }
-
-      console.log(url)
     });
 
     Router.events.on("routeChangeComplete", (url) => {
       setLoading(false)
-
-      console.log(loaderComponent)
     });
 
     Router.events.on("routeChangeError", (url) => {
