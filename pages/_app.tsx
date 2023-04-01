@@ -1,31 +1,53 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { store, persistor } from '../store/store'
-import { Provider, useDispatch, useSelector } from 'react-redux'
+import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { useEffect, useState } from 'react'
 import { Router } from 'next/router'
 import Layout from '@/components/Layout'
+import LoadingCategory from '@/components/LoadingCategory'
+import LoadingIndex from '@/components/LoadingIndex'
+import LoadingProduct from '@/components/LoadingProduct'
+import LoadingCart from '@/components/LoadingCart'
+
 export default function App({ Component, pageProps }: AppProps) {
 
   const [loading, setLoading] = useState(false)
-
+  const [loaderComponent, setLoaderComponent] = useState(<></>)
 
 
   useEffect(() => {
     Router.events.on("routeChangeStart", (url) => {
       setLoading(true)
-      // console.log(loading)
+
+      if( url.includes('/') ) {
+        setLoaderComponent( <LoadingIndex/> )
+      }
+
+      if( url.includes('category') ) {
+        setLoaderComponent( <LoadingCategory/> )
+      }
+
+      if( url.includes('product') ) {
+        setLoaderComponent( <LoadingProduct/> )
+      }
+
+      if( url.includes('cart') ) {
+        setLoaderComponent( <LoadingCart/> )
+      }
+
+      console.log(url)
     });
 
     Router.events.on("routeChangeComplete", (url) => {
       setLoading(false)
-      // console.log(loading)
+
+      console.log(loaderComponent)
     });
 
     Router.events.on("routeChangeError", (url) => {
       setLoading(false)
-      // console.log(loading)
     });
   }, [])
 
@@ -35,12 +57,11 @@ export default function App({ Component, pageProps }: AppProps) {
         {
           loading ?
             <Layout>
-              <span className='font-rubik text-3xl'>ЗАГРУЗКА...</span>
+              {loaderComponent}
             </Layout>
 
             :
             <Component {...pageProps} />
-
         }
       </PersistGate>
     </Provider>
