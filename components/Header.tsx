@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BsFillCartCheckFill } from 'react-icons/bs'
 import { BsCart4 } from 'react-icons/bs'
 import SearchForm from './SearchForm'
 
@@ -10,18 +9,18 @@ export default function Header() {
   const dispatch = useDispatch()
 
   return (
-    <div className='p-7 px-20 bg-primal drop-shadow-lg fixed w-full z-50'>
+    <div className='p-4 px-4 extra-sm:px-10 sm:px-20 bg-primal drop-shadow-lg fixed w-full z-50'>
       <nav>
-        <ul className='flex w-full justify-between items-center'>
-          <li className='text-3xl text-stone-50 hover:text-black uppercase font-anton font-bold'><Link href={'/'}>Store</Link></li>
-          <li className='relative flex items-center'>
+        <ul className='flex flex-col sm:flex-row w-full justify-between items-start sm:items-center'>
+          <li className='text-xl ml-2 extra-sm:text-3xl sm:ml-0 text-stone-50 hover:text-black uppercase font-anton font-bold'><Link href={'/'}>Store</Link></li>
+          <li className='relative flex items-center w-full sm:w-auto justify-between sm:justify-start mt-2'>
             <div className='mr-5'>
               <SearchForm />
             </div>
-            <Link className='text-stone-50 hover:text-black text-3xl flex items-center' href={'/cart'}>
+            <Link className='text-stone-50 hover:text-black mr-2 extra-sm:mr-0 text-3xl flex items-center' href={'/cart'}>
               <BsCart4 />
             </Link>
-            <span className='text-lg font-medium text-white absolute top-[-30%] right-[-3%]'>{cartProducts.cartReducer.totalCount}</span>
+            <span className='text-lg font-medium text-white absolute top-[-50%] extra-sm:top-[-30%] right-[0%] extra-sm:right-[-3%]'>{cartProducts.cartReducer.totalCount}</span>
           </li>
         </ul>
       </nav>

@@ -30,6 +30,10 @@ module.exports = {
 
       colors: {
         primal: 'rgb(134 239 172)'
+      },
+
+      screens: {
+        'extra-sm': '412px',
       }
     },
   },

@@ -25,17 +25,19 @@ export default function SearchForm() {
                     className="
                         basis-11/12
                         border-primal
-                        text-md
+                        text-xs
+                        extra-sm:text-base
                         border-2
                         pl-2
                         py-2
-                        pr-10
+                        pr-0
+                        sm:pr-10
                         rounded-2xl
                         bg-gray-100
                         focus:outline-none
                     "
                 />
-                <button type="submit" className="absolute right-[7%] top-[22%] text-2xl"><AiOutlineSearch /></button>
+                <button type="submit" className="absolute right-[7%] top-[22%] text-xl extra-sm:text-2xl"><AiOutlineSearch /></button>
             </form>
         </div>
     )

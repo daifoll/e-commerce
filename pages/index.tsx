@@ -41,8 +41,8 @@ export default function Home({ categories, error }: InferGetStaticPropsType<type
   return (
     <Layout>
       <div>
-        {error ? '' : <h1 className="text-3xl font-medium uppercase">Выберите категорию</h1>}
-        <div className="flex flex-wrap mt-4">
+        {error ? '' : <h1 className="text-xl extra-sm:text-3xl font-medium uppercase">Выберите категорию</h1>}
+        <div className="flex flex-wrap mt-0 sm:mt-4">
           {
             error ? <ErrorFetch error={error} />
               :
@@ -50,8 +50,8 @@ export default function Home({ categories, error }: InferGetStaticPropsType<type
                 if (index > 4) {
                   return null
                 } else {
-                  return <div key={cat.id} className="basis-1/2 p-1 mt-5">
-                    <Link href={`/category/${cat.id}/0?sortBy=default`} className="uppercase text-lg">{cat.name}</Link>
+                  return <div key={cat.id} className="basis-full sm:basis-full md:basis-1/2 p-1 mt-8 sm:mt-5">
+                    <Link href={`/category/${cat.id}/0?sortBy=default`} className="uppercase text-sm extra-sm:text-lg">{cat.name}</Link>
                     <div className="w-full flex overflow-hidden">
                       <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/0?sortBy=default`}><img className="w-full h-64 object-cover" src={cat.image} onError={(e) => hanlerOnErrorImage(e)} alt={cat.name} /></Link>
                     </div>
