@@ -45,14 +45,14 @@ export default function Sort({ route }: ISort) {
 
     }
     return (
-        <div>
-            <span>Sort By Price</span>
-            <select onChange={(e) => sortByPrice(e)} value={router.query.sortBy}>
+        <div className='my-6'>
+            <span className='text-sm sm:text-lg'>Сортировать (по цене):&nbsp;</span>
+            <select onChange={(e) => sortByPrice(e)} value={router.query.sortBy} className='bg-primal p-3 font-semibold text-sm sm:text-lg border-none text-white rounded-2xl'>
                 <option value="default">Без сортировки</option>
-                <option value="lowtohigh">Low to High</option>
-                <option value="hightolow">High to Low</option>
+                <option value="lowtohigh">По возрастанию</option>
+                <option value="hightolow">По убыванию</option>
             </select>
-            <button onClick={(e) => clearSort(e)}>Сбросить фильтры</button>
+            {/* <button onClick={(e) => clearSort(e)}>Сбросить фильтры</button> */}
         </div>
     )
 }

@@ -51,9 +51,9 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
             :
 
             <Layout>
-                <h1 className="text-3xl font-medium uppercase my-4">{categoryProducts[0].category.name}</h1>
+                <h1 className="text-xl extra-sm:text-3xl font-medium uppercase">{categoryProducts[0].category.name}</h1>
                 <Sort route={router.route} />
-                <div className="flex flex-wrap">
+                <div className="flex extra-sm:flex-row flex-wrap">
                     {
                         // Сортировка цены по возрастанию
                         sortTitle === 'lowtohigh' ?
@@ -83,56 +83,62 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
 
                 </div>
 
-                <div className="pt-9">
-                    {
-                        pageCount.map(page => {
-                            return <Link key={page} className="
-                            px-3 
-                            bg-primal 
-                            text-white text-xl 
-                            py-2 mr-1 
-                            leading-tight 
-                            border 
-                            border-primal 
-                            rounded-l-lg 
-                            hover:bg-white
-                            hover:text-gray-700 
-                            dark:bg-gray-800 
-                            dark:border-gray-700
-                            dark:text-gray-400 
-                            dark:hover:bg-gray-700 
-                            dark:hover:text-white" 
-                            
-                            href={`/category/${catId}/${page}/?sortBy=${router.query.sortBy}`}>{page + 1}</Link>
-                        })
+                <div className="pt-9 flex flex-col sm:flex-row">
+                    <div>
+                        {
+                            pageCount.map(page => {
+                                return <Link key={page} className="
+                                    px-3 
+                                    bg-primal 
+                                    text-white 
+                                    text-xs 
+                                    extra-sm:text-xl 
+                                    py-2 mr-1 
+                                    leading-tight 
+                                    border 
+                                    border-primal 
+                                    rounded-l-lg 
+                                    hover:bg-white
+                                    hover:text-gray-700 
+                                    dark:bg-gray-800 
+                                    dark:border-gray-700
+                                    dark:text-gray-400 
+                                    dark:hover:bg-gray-700 
+                                    dark:hover:text-white"
 
-                    }
+                                    href={`/category/${catId}/${page}/?sortBy=${router.query.sortBy}`}>{page + 1}</Link>
+                            })
 
-                    {
-                        pageCount.length > 0 ?
-                            <Link className="
-                            px-3 
-                            bg-primal 
-                            text-white 
-                            text-xl 
-                            py-2 
-                            mr-1 
-                            leading-tight
-                            border 
-                            border-primal 
-                            rounded-l-lg 
-                            hover:bg-white 
-                            hover:text-gray-700 
-                            dark:bg-gray-800 
-                            dark:border-gray-700 
-                            dark:text-gray-400 
-                            dark:hover:bg-gray-700 
-                            dark:hover:text-white" 
-                            
-                            href={`/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 0 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
-                            :
-                            null
-                    }
+                        }
+                    </div>
+                    <div className="mt-4 extra-sm:mt-6 sm:mt-0">
+                        {
+                            pageCount.length > 0 ?
+                                <Link className="
+                                        px-3 
+                                        bg-primal 
+                                        text-white
+                                        text-xs 
+                                        extra-sm:text-xl 
+                                        py-2 
+                                        mr-1 
+                                        leading-tight
+                                        border 
+                                        border-primal 
+                                        rounded-l-lg 
+                                        hover:bg-white 
+                                        hover:text-gray-700 
+                                        dark:bg-gray-800 
+                                        dark:border-gray-700 
+                                        dark:text-gray-400 
+                                        dark:hover:bg-gray-700 
+                                        dark:hover:text-white"
+
+                                    href={`/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 0 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
+                                :
+                                null
+                        }
+                    </div>
 
                 </div>
             </Layout>
