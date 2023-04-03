@@ -58,7 +58,7 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
             <Layout>
                 <div>
                     <div className="flex flex-col items-center md:flex-row basis-1/2" key={product.id}>
-                        <div className="w-full md:w-[65%] flex flex-wrap justify-center">
+                        <div className="w-full md:w-[65%] flex flex-wrap justify-center basis-2/5">
                             <img className="basis-full h-72 object-cover object-center" src={product.images[0]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
                             <img className="basis-1/2 mt-5 md:mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[1] ? product.images[1] : '/stubimg/notfound.png'} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
                             <img className="basis-1/2 mt-5 md:mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[2] ? product.images[1] : '/stubimg/notfound.png'} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
