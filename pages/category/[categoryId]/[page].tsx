@@ -23,7 +23,7 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
     const [sortTitle, setSortTitle] = useState(router.query.sortBy)
 
     useEffect(() => {
-        const fetchData = async (catId: string) => {
+        const fetchData = async () => {
             const allCatProductsRes = await fetch(`https://api.escuelajs.co/api/v1/categories/${catId}/products`)
             const allCatProducts: IProduct[] = await allCatProductsRes.json()
 
@@ -37,7 +37,7 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
             setPageCount([...pagesCountArr])
         }
 
-        fetchData(catId)
+        fetchData()
 
 
     }, [])
