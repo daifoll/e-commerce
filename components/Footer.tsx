@@ -12,7 +12,7 @@ export default function Footer({ categories }: IFooterProps) {
                             if (index > 4) {
                                 return null
                             } else {
-                                return <li key={cat.id} className="uppercase hover:text-stone-50 text-sm extra-sm:text-lg mb-3"><Link href={`/category/${cat.id}/1`}>{cat.name}</Link></li>
+                                return <li key={cat.id} className="uppercase hover:text-stone-50 text-sm extra-sm:text-lg mb-3"><Link aria-aria-label={cat.name} href={`/category/${cat.id}/1`}>{cat.name}</Link></li>
                             }
 
                         })
@@ -22,8 +22,8 @@ export default function Footer({ categories }: IFooterProps) {
             <nav className="basis-1/2 mt-10 sm:mt-0">
                 <h3 className="text-xl extra-sm:text-2xl font-medium uppercase mb-4">Контакты</h3>
                 <ul className='flex flex-col items-start h-auto'>
-                    <li className='hover:text-stone-50 text-sm extra-sm:text-lg mb-3'><a href="mailto:kobykhnov.bl@gmail.com">kobykhnov.bl@gmail.com</a></li>
-                    <li className='hover:text-stone-50 text-sm extra-sm:text-lg mb-3'><a href="https://github.com/daifoll/e-commerce" target="_blank">GitHub</a></li>
+                    <li className='hover:text-stone-50 text-sm extra-sm:text-lg mb-3'><a aria-label="kobykhnov.bl@gmail.com" href="mailto:kobykhnov.bl@gmail.com">kobykhnov.bl@gmail.com</a></li>
+                    <li className='hover:text-stone-50 text-sm extra-sm:text-lg mb-3'><a aria-label="GitHub" href="https://github.com/daifoll/e-commerce" target="_blank">GitHub</a></li>
                 </ul>
             </nav>
         </div>

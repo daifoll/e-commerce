@@ -17,7 +17,7 @@ export default function Header() {
             <div className='mr-5'>
               <SearchForm />
             </div>
-            <Link className='text-stone-50 hover:text-black mr-2 extra-sm:mr-0 text-3xl flex items-center' href={'/cart'}>
+            <Link aria-label='cart' className='text-stone-50 hover:text-black mr-2 extra-sm:mr-0 text-3xl flex items-center' href={'/cart'}>
               <BsCart4 />
             </Link>
             <span className='text-lg font-medium text-white absolute top-[-50%] extra-sm:top-[-30%] right-[0%] extra-sm:right-[-3%]'>{cartProducts.cartReducer.totalCount}</span>
