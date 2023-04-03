@@ -4,6 +4,7 @@ import ProductsMarkup from "@/components/ProductsMarkup"
 import SearchMarkup from "@/components/ProductsMarkup"
 import Sort from "@/components/Sort"
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -50,6 +51,9 @@ export default function Search({ searchedProducts, allProductsBySearch, error }:
         error ?
 
             <Layout>
+                <Head>
+                    <title>Поиск: {router.query.byTitle} | Store</title>
+                </Head>
                 <ErrorFetch error={error} />
             </Layout>
             :

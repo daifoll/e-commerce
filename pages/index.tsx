@@ -1,6 +1,7 @@
 import ErrorFetch from "@/components/ErrorFetch"
 import Layout from "@/components/Layout"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
+import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -42,6 +43,9 @@ export default function Home({ categories, error }: InferGetStaticPropsType<type
 
   return (
     <Layout>
+      <Head>
+        <title>Главная | Store</title>
+      </Head>
       <div>
         {error ? '' : <h1 className="text-xl extra-sm:text-3xl font-medium uppercase">Выберите категорию</h1>}
         <div className="flex flex-wrap mt-0 sm:mt-4">

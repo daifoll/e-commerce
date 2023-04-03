@@ -7,6 +7,7 @@ import React, { SyntheticEvent } from 'react'
 import { addToCart, deleteProduct, selectCartProducts } from '@/store/slices/cartSlice'
 import ErrorFetch from '@/components/ErrorFetch'
 import Image from 'next/image'
+import Head from 'next/head'
 
 export default function Product({ product, error }: InferGetStaticPropsType<typeof getStaticProps>) {
     const cartProducts = useSelector(state => state) as ICartState
@@ -53,6 +54,9 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
     return (
         error ?
             <Layout>
+                <Head>
+                    <title>{product.title} | Store</title>
+                </Head>
                 <ErrorFetch error={error} />
             </Layout>
             :
@@ -60,9 +64,9 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
                 <div>
                     <div className="flex flex-col items-center md:flex-row basis-1/2" key={product.id}>
                         <div className="w-full md:w-[65%] flex flex-wrap justify-center basis-2/5">
-                            <Image width={300} height={300} priority={true} loader={({width}) => `${product.images[0]}?w=${width}`} className="basis-full h-72 object-cover object-center" src={product.images[0]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
-                            <Image width={300} height={300} priority={true} loader={({width}) => `${product.images[1]}?w=${width}`} className="basis-1/2 mt-5 md:mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[1] ? product.images[1] : '/stubimg/notfound.png'} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
-                            <Image width={300} height={300} priority={true} loader={({width}) => `${product.images[2]}?w=${width}`} className="basis-1/2 mt-5 md:mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[2] ? product.images[1] : '/stubimg/notfound.png'} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
+                            <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[0]}?w=${width}`} className="basis-full h-72 object-cover object-center" src={product.images[0]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
+                            <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[1]}?w=${width}`} className="basis-1/2 mt-5 md:mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[1] ? product.images[1] : '/stubimg/notfound.png'} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
+                            <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[2]}?w=${width}`} className="basis-1/2 mt-5 md:mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[2] ? product.images[1] : '/stubimg/notfound.png'} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
                         </div>
                         <div className='ml-0 md:ml-6'>
                             <div className="text-lg mt-10 md:mt-4"><Link aria-label={product.category.name} href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
@@ -120,14 +124,14 @@ export const getStaticProps: GetStaticProps<{ product: IProduct, error: string }
                 error
             }
         }
-    }else if (res.status === 404) { // Если 404 ошибка
+    } else if (res.status === 404) { // Если 404 ошибка
 
         return {
             notFound: true
         }
 
-    }else { // Если ошибок нет
-        
+    } else { // Если ошибок нет
+
         const product = await res.json()
 
         return {

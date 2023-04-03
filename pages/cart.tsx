@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Head from "next/head";
 
 const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -82,6 +83,9 @@ export default function Cart() {
 
     return (
         <Layout>
+            <Head>
+                <title>Корзина | Store</title>
+            </Head>
             <h1 className="text-xl md:text-3xl font-medium uppercase">Корзина</h1>
             {
                 cartProducts.cartReducer?.products.length ?
@@ -93,7 +97,7 @@ export default function Cart() {
                                         <li key={product.id + new Date().getDate()}>
                                             <div className="flex flex-col sm:flex-row bg-green-200 p-5 mb-3 rounded-2xl">
                                                 <div className="w-full h-32 sm:h-auto sm:w-40">
-                                                    <Image width={300} height={300} priority={true} loader={({width}) => `${product.image}?w=${width}`} className="w-full h-full object-cover" src={product.image} alt={product.title} />
+                                                    <Image width={300} height={300} priority={true} loader={({ width }) => `${product.image}?w=${width}`} className="w-full h-full object-cover" src={product.image} alt={product.title} />
                                                 </div>
                                                 <div className="ml-0 sm:ml-6 mt-3 sm:mt-0">
                                                     <p className="text-xl md:text-2xl"><Link aria-label={product.title} href={`/product/${product.id}`}>{product.title}</Link></p>

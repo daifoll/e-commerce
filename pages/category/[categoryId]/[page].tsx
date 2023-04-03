@@ -9,6 +9,7 @@ import Sort from "@/components/Sort"
 import SearchMarkup from "@/components/ProductsMarkup"
 import ProductsMarkup from "@/components/ProductsMarkup"
 import ErrorFetch from "@/components/ErrorFetch"
+import Head from "next/head"
 
 export default function Category({ categoryProducts, catId, error }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()
@@ -43,14 +44,21 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
     }, [])
 
     return (
+
         error ?
             <Layout>
+                <Head>
+                    <title>{categoryProducts[0].category.name} - {router.query.page} | Store</title>
+                </Head>
                 <ErrorFetch error={error} />
             </Layout>
 
             :
 
             <Layout>
+                <Head>
+                    <title>{categoryProducts[0].category.name} - {router.query.page} | Store</title>
+                </Head>
                 <h1 className="text-xl extra-sm:text-3xl font-medium uppercase">{categoryProducts[0].category.name}</h1>
                 <Sort route={router.route} />
                 <div className="flex extra-sm:flex-row flex-wrap">
@@ -133,8 +141,8 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
                                         dark:text-gray-400 
                                         dark:hover:bg-gray-700 
                                         dark:hover:text-white"
-                                        aria-label='next button'
-                                        href={`/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 0 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
+                                    aria-label='next button'
+                                    href={`/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 0 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
                                 :
                                 null
                         }
