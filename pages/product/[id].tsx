@@ -65,7 +65,7 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
                             <Image width={300} height={300} priority={true} loader={({width}) => `${product.images[2]}?w=${width}`} className="basis-1/2 mt-5 md:mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[2] ? product.images[1] : '/stubimg/notfound.png'} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
                         </div>
                         <div className='ml-0 md:ml-6'>
-                            <div className="text-lg mt-10 md:mt-4"><Link href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
+                            <div className="text-lg mt-10 md:mt-4"><Link aria-label={product.category.name} href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>
                             <div className="text-xl"><strong>{product.title}</strong></div>
                             <p className="text-lg mt-4 min-h-[80px]">{product.description}</p>
                             <div className="mt-10 md:mt-1"><span className="text-2xl font-semibold">{product.price}$</span></div>

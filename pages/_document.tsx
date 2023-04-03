@@ -3,8 +3,9 @@ export default function Document() {
 
   return (
     <Html lang="en">
-      <Head title='Store - Next.js | Stripe | Typescript | Tailwind | Redux Toolkit pet-project'>
+      <Head>
         <link rel="shortcut icon" href="/favicon.png" />
+        <title> Store - Next.js | Stripe | Typescript | Tailwind | Redux Toolkit pet-project </title>
       </Head>
       <body>
         <Main />

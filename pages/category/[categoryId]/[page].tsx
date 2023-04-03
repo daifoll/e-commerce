@@ -105,7 +105,7 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
                                     dark:text-gray-400 
                                     dark:hover:bg-gray-700 
                                     dark:hover:text-white"
-
+                                    aria-label={`${page}`}
                                     href={`/category/${catId}/${page}/?sortBy=${router.query.sortBy}`}>{page + 1}</Link>
                             })
 
@@ -133,8 +133,8 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
                                         dark:text-gray-400 
                                         dark:hover:bg-gray-700 
                                         dark:hover:text-white"
-
-                                    href={`/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 0 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
+                                        aria-label='next button'
+                                        href={`/category/${catId}/${Number(router.query.page) + 1 > pageCount.length - 1 ? 0 : Number(router.query.page) + 1}/?sortBy=${router.query.sortBy}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
                                 :
                                 null
                         }
