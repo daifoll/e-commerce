@@ -55,7 +55,7 @@ export default function Home({ categories, error }: InferGetStaticPropsType<type
                   return <div key={cat.id} className="basis-full sm:basis-full md:basis-1/2 p-1 mt-8 sm:mt-5">
                     <Link href={`/category/${cat.id}/0?sortBy=default`} className="uppercase text-sm extra-sm:text-lg">{cat.name}</Link>
                     <div className="w-full flex overflow-hidden">
-                      <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/0?sortBy=default`}><Image className="w-full h-64 object-cover" src={cat.image} onError={(e) => hanlerOnErrorImage(e)} alt={cat.name} /></Link>
+                      <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/0?sortBy=default`}><Image className="w-full h-64 object-cover" src={cat.image ? cat.image : '/stubimg/notfound.png'} onError={(e) => hanlerOnErrorImage(e)} alt={cat.name} /></Link>
                     </div>
                   </div>
                 }
