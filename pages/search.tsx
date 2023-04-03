@@ -53,6 +53,7 @@ export default function Search({ searchedProducts, allProductsBySearch, error }:
             <Layout>
                 <Head>
                     <title>Поиск: {router.query.byTitle} | Store</title>
+                    <link rel='preconnect'/>
                 </Head>
                 <ErrorFetch error={error} />
             </Layout>
@@ -60,6 +61,7 @@ export default function Search({ searchedProducts, allProductsBySearch, error }:
             <Layout>
                 <Head>
                     <title>{router.query.byTitme} | Store</title>
+                    <link rel='preconnect'/>
                 </Head>
                 {
                     searchedProducts.length ?

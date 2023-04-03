@@ -6,6 +6,7 @@ export default function Document() {
       <Head>
         <link rel="shortcut icon" href="/favicon.png" />
         <title> Store - Next.js | Stripe | Typescript | Tailwind | Redux Toolkit pet-project </title>
+        <link rel='preconnect'/>
       </Head>
       <body>
         <Main />

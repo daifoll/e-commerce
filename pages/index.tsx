@@ -45,6 +45,7 @@ export default function Home({ categories, error }: InferGetStaticPropsType<type
     <Layout>
       <Head>
         <title>Главная | Store</title>
+        <link rel='preconnect'/>
       </Head>
       <div>
         {error ? '' : <h1 className="text-xl extra-sm:text-3xl font-medium uppercase">Выберите категорию</h1>}

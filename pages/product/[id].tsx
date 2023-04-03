@@ -56,6 +56,7 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
             <Layout>
                 <Head>
                     <title>{product.title} | Store</title>
+                    <link rel='preconnect'/>
                 </Head>
                 <ErrorFetch error={error} />
             </Layout>
@@ -63,6 +64,7 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
             <Layout>
                 <Head>
                     <title>{product.title} | Store</title>
+                    <link rel='preconnect'/>
                 </Head>
                 <div>
                     <div className="flex flex-col items-center md:flex-row basis-1/2" key={product.id}>

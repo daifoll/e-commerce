@@ -49,6 +49,7 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
             <Layout>
                 <Head>
                     <title>{categoryProducts[0].category.name} - {router.query.page} | Store</title>
+                    <link rel='preconnect'/>
                 </Head>
                 <ErrorFetch error={error} />
             </Layout>
@@ -58,6 +59,7 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
             <Layout>
                 <Head>
                     <title>{categoryProducts[0].category.name} - {router.query.page} | Store</title>
+                    <link rel='preconnect'/>
                 </Head>
                 <h1 className="text-xl extra-sm:text-3xl font-medium uppercase">{categoryProducts[0].category.name}</h1>
                 <Sort route={router.route} />

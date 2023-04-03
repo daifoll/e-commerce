@@ -85,6 +85,7 @@ export default function Cart() {
         <Layout>
             <Head>
                 <title>Корзина | Store</title>
+                <link rel='preconnect'/>
             </Head>
             <h1 className="text-xl md:text-3xl font-medium uppercase">Корзина</h1>
             {
