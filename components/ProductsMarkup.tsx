@@ -53,6 +53,7 @@ export default function ProductsMarkup({ product }: ISearchMarkUp) {
         dispatch(deleteProduct({ id: product.id }))
     }
 
+
     return (
 
         // Разметка товаров
@@ -60,7 +61,7 @@ export default function ProductsMarkup({ product }: ISearchMarkUp) {
             <div key={product.id} className="flex flex-col items-center mb-10 justify-between">
                 <div className="w-full overflow-hidden">
                     <Link className="" href={`/product/${product.id}`}>
-                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} alt={product.title} />
+                        <Image width={300} height={300} priority={true} loader={({width}) => `${product.images[0]}?w=${width}`}  className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} alt={product.title} />
                     </Link>
                 </div>
                 <div className='flex flex-col'>
