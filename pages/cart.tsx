@@ -5,6 +5,7 @@ import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 import { loadStripe } from '@stripe/stripe-js';
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -92,7 +93,7 @@ export default function Cart() {
                                         <li key={product.id + new Date().getDate()}>
                                             <div className="flex flex-col sm:flex-row bg-green-200 p-5 mb-3 rounded-2xl">
                                                 <div className="w-full h-32 sm:h-auto sm:w-40">
-                                                    <img className="w-full h-full object-cover" src={product.image} alt={product.title} />
+                                                    <Image className="w-full h-full object-cover" src={product.image} alt={product.title} />
                                                 </div>
                                                 <div className="ml-0 sm:ml-6 mt-3 sm:mt-0">
                                                     <p className="text-xl md:text-2xl"><Link href={`/product/${product.id}`}>{product.title}</Link></p>

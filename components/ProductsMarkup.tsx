@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SyntheticEvent } from "react"
+import Image from 'next/image'
 
 export default function ProductsMarkup({ product }: ISearchMarkUp) {
 
@@ -59,7 +60,7 @@ export default function ProductsMarkup({ product }: ISearchMarkUp) {
             <div key={product.id} className="flex flex-col items-center mb-10 justify-between">
                 <div className="w-full overflow-hidden">
                     <Link className="" href={`/product/${product.id}`}>
-                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} />
+                        <Image className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} alt={product.title} />
                     </Link>
                 </div>
                 <div className='flex flex-col'>

@@ -56,9 +56,9 @@ export default function Search({ searchedProducts, allProductsBySearch, error }:
             <Layout>
                 {
                     searchedProducts.length ?
-                        <h1 className="text-2xl">Найденные товары по запросу: "{router.query.byTitle}"</h1>
+                        <h1 className="text-2xl">Найденные товары по запросу: &quot;{router.query.byTitle}&quot;</h1>
                         :
-                        <h1 className="text-2xl">По запросу: "{router.query.byTitle}" ничего не найдено.</h1>
+                        <h1 className="text-2xl">По запросу: &quot;{router.query.byTitle}&quot; ничего не найдено.</h1>
                 }
 
                 {
