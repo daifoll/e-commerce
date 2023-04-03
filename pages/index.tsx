@@ -49,13 +49,16 @@ export default function Home({ categories, error }: InferGetStaticPropsType<type
             error ? <ErrorFetch error={error} />
               :
               categories.map((cat: ICategory, index) => {
+                const loader = () => {
+                  return `${cat.image}`
+                }
                 if (index > 4) {
                   return null
                 } else {
                   return <div key={cat.id} className="basis-full sm:basis-full md:basis-1/2 p-1 mt-8 sm:mt-5">
                     <Link href={`/category/${cat.id}/0?sortBy=default`} className="uppercase text-sm extra-sm:text-lg">{cat.name}</Link>
                     <div className="w-full flex overflow-hidden">
-                      <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/0?sortBy=default`}><img className="w-full h-64 object-cover" src={cat.image ? `${cat.image}` : '/stubimg/notfound.png'} onError={(e) => hanlerOnErrorImage(e)} alt={cat.name} /></Link>
+                      <Link className="hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/0?sortBy=default`}><Image loader={loader} unoptimized={true} priority={true} width={300} height={300} className="w-full h-64 object-cover" src={cat.image ? cat.image : '/stubimg/notfound.png'} onError={(e) => hanlerOnErrorImage(e)} alt={cat.name} /></Link>
                     </div>
                   </div>
                 }
