@@ -39,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
     });
 
     Router.events.on("routeChangeComplete", (url) => {
-      setLoading(true)
+      setLoading(false)
     });
 
     Router.events.on("routeChangeError", (url) => {
