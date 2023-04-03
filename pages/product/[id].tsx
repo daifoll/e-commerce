@@ -61,6 +61,9 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
             </Layout>
             :
             <Layout>
+                <Head>
+                    <title>{product.title} | Store</title>
+                </Head>
                 <div>
                     <div className="flex flex-col items-center md:flex-row basis-1/2" key={product.id}>
                         <div className="w-full md:w-[65%] flex flex-wrap justify-center basis-2/5">
