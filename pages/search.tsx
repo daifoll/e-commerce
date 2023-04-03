@@ -95,17 +95,17 @@ export default function Search({ searchedProducts, allProductsBySearch, error }:
                                 )
                     }
                 </div>
-                <div className="pt-9">
+                <div className="pt-4 flex flex-wrap">
                     {
                         pageCount.map(page => {
-                            return <Link key={page} className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/search/?${byTitle[0]}=${byTitle[1]}&${pageArr[0]}=${page}&${sortBy[0]}=${sortBy[1]}`}>{page + 1}</Link>
+                            return <Link key={page} className="px-3 mt-5 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/search/?${byTitle[0]}=${byTitle[1]}&${pageArr[0]}=${page}&${sortBy[0]}=${sortBy[1]}`}>{page + 1}</Link>
                         })
 
                     }
 
                     {
                         pageCount.length > 0 ?
-                            <Link className="px-3 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/search/?${byTitle[0]}=${byTitle[1]}&${pageArr[0]}=${Number(router.query.page) + 1 > pageCount.length - 1 ? pageCount.length - 1 : Number(router.query.page) + 1}&${sortBy[0]}=${sortBy[1]}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
+                            <Link className="px-3 mt-5 bg-primal text-white text-xl py-2 mr-1 leading-tight border border-primal rounded-l-lg hover:bg-white hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href={`/search/?${byTitle[0]}=${byTitle[1]}&${pageArr[0]}=${Number(router.query.page) + 1 > pageCount.length - 1 ? pageCount.length - 1 : Number(router.query.page) + 1}&${sortBy[0]}=${sortBy[1]}`}>{Number(router.query.page) + 1 > pageCount.length - 1 ? 'Вернуться в начало' : 'Следующая страница'}</Link>
                             :
                             null
                     }
