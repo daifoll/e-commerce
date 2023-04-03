@@ -60,7 +60,7 @@ export default function ProductsMarkup({ product }: ISearchMarkUp) {
             <div key={product.id} className="flex flex-col items-center mb-10 justify-between">
                 <div className="w-full overflow-hidden">
                     <Link className="" href={`/product/${product.id}`}>
-                        <Image className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} alt={product.title} />
+                        <img className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} alt={product.title} />
                     </Link>
                 </div>
                 <div className='flex flex-col'>
