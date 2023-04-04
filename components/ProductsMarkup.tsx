@@ -15,6 +15,7 @@ export default function ProductsMarkup({ product }: ISearchMarkUp) {
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
         const catName = e.currentTarget.alt.toLocaleLowerCase()
 
+        e.currentTarget.srcset = '/stubimg/notfound.png'
         e.currentTarget.src = '/stubimg/notfound.png'
         e.currentTarget.alt = 'not found'
 
