@@ -5,7 +5,7 @@ export default function Footer({ categories }: IFooterProps) {
     return (
         <div className='p-5 extra-sm:p-14 bg-primal flex flex-col sm:flex-row drop-shadow-lg'>
             <nav className="basis-1/2">
-                <h3 className="text-xl extra-sm:text-2xl font-medium uppercase mb-4">Категории</h3>
+                <h2 className="text-xl extra-sm:text-2xl font-medium uppercase mb-4">Категории</h2>
                 <ul className='flex flex-col items-start h-auto'>
                     {
                         categories.map((cat, index) => {

@@ -37,7 +37,7 @@ export default function SearchForm() {
                         focus:outline-none
                     "
                 />
-                <button type="submit" className="absolute right-[7%] top-[22%] text-xl extra-sm:text-2xl"><AiOutlineSearch /></button>
+                <button aria-label="start search button" type="submit" className="absolute right-[7%] top-[22%] text-xl extra-sm:text-2xl"><AiOutlineSearch /></button>
             </form>
         </div>
     )
