@@ -12,7 +12,7 @@ export default function Footer({ categories }: IFooterProps) {
                             if (index > 4) {
                                 return null
                             } else {
-                                return <li key={cat.id} className="uppercase hover:text-stone-50 text-sm extra-sm:text-lg mb-3"><Link aria-aria-label={cat.name} href={`/category/${cat.id}/1`}>{cat.name}</Link></li>
+                                return <li key={cat.id} className="uppercase hover:text-stone-50 text-sm extra-sm:text-lg mb-3"><Link aria-label={cat.name} href={`/category/${cat.id}/1`}>{cat.name}</Link></li>
                             }
 
                         })

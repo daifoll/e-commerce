@@ -45,7 +45,7 @@ export default function Search({ searchedProducts, allProductsBySearch, error }:
         }
         setPageCount([...pagesCountArr])
 
-    }, [])
+    }, [allProductsBySearch.length])
 
     return (
         error ?

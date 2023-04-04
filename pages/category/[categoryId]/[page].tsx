@@ -41,7 +41,7 @@ export default function Category({ categoryProducts, catId, error }: InferGetSta
         fetchData()
 
 
-    }, [])
+    }, [catId])
 
     return (
 

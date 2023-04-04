@@ -2,10 +2,9 @@ import { Html, Head, Main, NextScript } from 'next/document'
 export default function Document() {
 
   return (
-    <Html lang="en">
-      <Head>
+    <Html lang="ru">
+      <Head title='Store - Next.js | Stripe | Typescript | Tailwind | Redux Toolkit pet-project'>
         <link rel="shortcut icon" href="/favicon.png" />
-        <title> Store - Next.js | Stripe | Typescript | Tailwind | Redux Toolkit pet-project </title>
         <link rel='preconnect'/>
       </Head>
       <body>
