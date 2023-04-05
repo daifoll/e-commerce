@@ -8,10 +8,13 @@ import { addToCart, deleteProduct, selectCartProducts } from '@/store/slices/car
 import ErrorFetch from '@/components/ErrorFetch'
 import Image from 'next/image'
 import Head from 'next/head'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 export default function Product({ product, error }: InferGetStaticPropsType<typeof getStaticProps>) {
     const cartProducts = useSelector(state => state) as ICartState
     const dispatch = useDispatch()
+
+    const router = useRouter()
 
     function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1 }: IProductAction) {
         dispatch(addToCart({ id: id, title: title, price: price, totalPrice: totalPrice, image: image, quantity: quantity, inCart: true }))
@@ -57,7 +60,7 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
             <Layout>
                 <Head>
                     <title>{product.title} | Store</title>
-                    <link rel='preconnect'/>
+                    <link rel='preconnect' />
                 </Head>
                 <ErrorFetch error={error} />
             </Layout>
@@ -65,10 +68,13 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
             <Layout>
                 <Head>
                     <title>{product.title} | Store</title>
-                    <link rel='preconnect'/>
+                    <link rel='preconnect' />
                 </Head>
                 <div>
-                    <div className="flex flex-col lg:flex-row items-center lg:items-start basis-1/2" key={product.id}>
+                    <button className='flex items-center text-base mt-4 p-3 font-semibold uppercase bg-primal text-black hover:bg-green-400 hover:text-stone-50 rounded-full' aria-label='back to previous page' type="button" onClick={() => router.back()}>
+                        <AiOutlineArrowLeft size='1.5rem'/> Вернуться
+                    </button>
+                    <div className="flex flex-col lg:flex-row items-center lg:items-start basis-1/2 mt-4" key={product.id}>
                         <div className="w-full lg:w-[65%] flex flex-wrap justify-center basis-2/5">
                             <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[0]}?w=${width}`} className="basis-full h-72 object-cover object-center" src={product.images[0]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
                             <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[1]}?w=${width}`} className="basis-1/2 mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[1] ? product.images[1] : '/stubimg/notfound.png'} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />

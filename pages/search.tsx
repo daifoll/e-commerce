@@ -60,7 +60,7 @@ export default function Search({ searchedProducts, allProductsBySearch, error }:
             :
             <Layout>
                 <Head>
-                    <title>{router.query.byTitme} | Store</title>
+                    <title>Поиск: &quot;{router.query.byTitle}&quot; - Страница {Number(router.query.page) + 1} | Store</title>
                     <link rel='preconnect'/>
                 </Head>
                 {
