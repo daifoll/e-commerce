@@ -14,7 +14,7 @@ CVC: *Любые три цифры*
 Подробнее про тестовый карты на сайте <a href="https://stripe.com/docs/testing#cards" target="_blank">Stripe</a>
 
 ### Stack ###
-<hr>
+
 * Next.js
 * TypeScript
 * Redux (Toolkit)
