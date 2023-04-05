@@ -1,10 +1,11 @@
 # E-Commerce (интернет-магазин).
 Pet-проект представляет собой интернет-магазин с возможностью поиска товара, сортировки, добавления/удаления из корзины и проведения тестовой оплаты.
 
-**[Открыть проект](e-commerce-daifoll.vercel.app)**
+**[Открыть проект](https://e-commerce-daifoll.vercel.app)**
 
 ## Screenshots
-![e-commerce-daifoll vercel app_](https://user-images.githubusercontent.com/54538084/230060715-fd0f30b3-1e99-449a-b290-74b65fbc29f0.png)
+![e-commerce-daifoll vercel app_ (1)](https://user-images.githubusercontent.com/54538084/230066089-c1dfc63a-66cd-4619-adfe-3b538b08f790.png)
+
 
 ### Рекомендация перед ознакомлением с проектом:
 
