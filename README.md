@@ -25,5 +25,23 @@ CVC: *Любые три цифры*
 * Tailwind
 * Stripe
 
+## Getting Started
+
+### Clone Repository
+`git clone https://github.com/daifoll/e-commerce.git`
+
+### Add .env.local file to root directory
+```
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_SECRET_KEY=
+```
+### Development
+`npm run dev`
+
+### Testing
+`npm run lint`
+
+### Build
+`npm run build`
 
 
