@@ -132,7 +132,7 @@ export default function Cart() {
                                                 </div>
                                                 <div className="ml-0 sm:ml-6 mt-3 sm:mt-0">
                                                     <p className="text-xl md:text-2xl"><Link aria-label={product.title} href={`/product/${product.id}`}>{product.title}</Link></p>
-                                                    <p className="text-sm ms:text-xl mt-1 sm:mt-5"> Кол-во:</p>
+                                                    <p className="text-sm md:text-xl mt-1 sm:mt-5"> Кол-во:</p>
                                                     <div className="flex items-center mt-0 sm:mt-1">
                                                         <button onClick={() => handleClickDecrementQuantity(product)} className="text-xl md:text-3xl mr-2">
                                                             <AiFillMinusCircle />
