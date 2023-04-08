@@ -19,22 +19,22 @@ export default function Home({ categories, error }: InferGetStaticPropsType<type
     switch (catName) {
       case 'clothes':
         return '/stubimg/clothes.jpg'
-        break
+        
       case 'electronics':
         return '/stubimg/electronics.jpg'
-        break
+        
       case 'furniture':
         return '/stubimg/furniture.jpg'
-        break
+       
       case 'shoes':
         return '/stubimg/shoes.jpg'
-        break
+        
       case 'others':
         return '/stubimg/others.jpg'
-        break
+        
       default:
         return 'stubimg/clothes.jpg'
-        break
+        
     }
   }
 

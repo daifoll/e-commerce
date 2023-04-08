@@ -62,6 +62,43 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
         }
     }
 
+    function hanlerOnLoadImage(e: SyntheticEvent<HTMLImageElement>) {
+        const catName = e.currentTarget.alt.toLocaleLowerCase()
+
+        switch (catName) {
+            case 'clothes':
+                e.currentTarget.src = '/stubimg/clothes.jpg'
+                e.currentTarget.srcset = '/stubimg/clothes.jpg'
+                e.currentTarget.alt = catName
+                break
+            case 'electronics':
+                e.currentTarget.src = '/stubimg/electronics.jpg'
+                e.currentTarget.srcset = '/stubimg/electronics.jpg'
+                e.currentTarget.alt = catName
+                break
+            case 'furniture':
+                e.currentTarget.src = '/stubimg/furniture.jpg'
+                e.currentTarget.srcset = '/stubimg/furniture.jpg'
+                e.currentTarget.alt = catName
+                break
+            case 'shoes':
+                e.currentTarget.src = '/stubimg/shoes.jpg'
+                e.currentTarget.srcset = '/stubimg/shoes.jpg'
+                e.currentTarget.alt = catName
+                break
+            case 'others':
+                e.currentTarget.src = '/stubimg/others.jpg'
+                e.currentTarget.srcset = '/stubimg/others.jpg'
+                e.currentTarget.alt = catName
+                break
+            default:
+                e.currentTarget.src = '/stubimg/notfound.png'
+                e.currentTarget.srcset = '/stubimg/notfound.png'
+                e.currentTarget.alt = 'not found'
+                break
+        }
+    }
+
     return (
         error ?
             <Layout>
@@ -83,9 +120,9 @@ export default function Product({ product, error }: InferGetStaticPropsType<type
                     </button>
                     <div className="flex flex-col lg:flex-row items-center lg:items-start basis-1/2 mt-4" key={product.id}>
                         <div className="w-full lg:w-[65%] flex flex-wrap justify-center basis-2/5">
-                            <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[0]}?w=${width}`} className="basis-full h-72 object-cover object-center" src={product.images[0]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
-                            <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[1]}?w=${width}`} className="basis-1/2 mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[1]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
-                            <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[2]}?w=${width}`} className="basis-1/2 mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[2]} alt={product.category.name} onError={(e) => hanlerOnErrorImage(e)} />
+                            <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[0]}?w=${width}`} className="basis-full h-72 object-cover object-center" src={product.images[0]} alt={product.category.name} onLoad={(e) => hanlerOnLoadImage(e)} onError={(e) => hanlerOnErrorImage(e)} />
+                            <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[1]}?w=${width}`} className="basis-1/2 mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[1]} alt={product.category.name} onLoad={(e) => hanlerOnLoadImage(e)} onError={(e) => hanlerOnErrorImage(e)} />
+                            <Image width={300} height={300} priority={true} loader={({ width }) => `${product.images[2]}?w=${width}`} className="basis-1/2 mt-0 w-20 h-44 md:h-56 object-cover" src={product.images[2]} alt={product.category.name} onLoad={(e) => hanlerOnLoadImage(e)} onError={(e) => hanlerOnErrorImage(e)} />
                         </div>
                         <div className='ml-0 lg:ml-6'>
                             <div className="text-lg mt-10 md:mt-4"><Link aria-label={product.category.name} href={`/category/${product.category.id}/1`}><span>{product.category.name}</span></Link></div>

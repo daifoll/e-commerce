@@ -119,7 +119,7 @@ export default function Cart() {
 
     function hanlerOnLoadImage(e: SyntheticEvent<HTMLImageElement>) {
         const catName = e.currentTarget.alt.toLocaleLowerCase()
-        console.log(catName)
+    
         switch (catName) {
             case 'clothes':
                 e.currentTarget.src = '/stubimg/clothes.jpg'
