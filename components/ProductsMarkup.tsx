@@ -49,43 +49,6 @@ export default function ProductsMarkup({ product }: ISearchMarkUp) {
         }
     }
 
-    function hanlerOnLoadImage(e: SyntheticEvent<HTMLImageElement>) {
-        const catName = e.currentTarget.alt.toLocaleLowerCase()
-
-        switch (catName) {
-            case 'clothes':
-                e.currentTarget.src = '/stubimg/clothes.jpg'
-                e.currentTarget.srcset = '/stubimg/clothes.jpg'
-                e.currentTarget.alt = catName
-                break
-            case 'electronics':
-                e.currentTarget.src = '/stubimg/electronics.jpg'
-                e.currentTarget.srcset = '/stubimg/electronics.jpg'
-                e.currentTarget.alt = catName
-                break
-            case 'furniture':
-                e.currentTarget.src = '/stubimg/furniture.jpg'
-                e.currentTarget.srcset = '/stubimg/furniture.jpg'
-                e.currentTarget.alt = catName
-                break
-            case 'shoes':
-                e.currentTarget.src = '/stubimg/shoes.jpg'
-                e.currentTarget.srcset = '/stubimg/shoes.jpg'
-                e.currentTarget.alt = catName
-                break
-            case 'others':
-                e.currentTarget.src = '/stubimg/others.jpg'
-                e.currentTarget.srcset = '/stubimg/others.jpg'
-                e.currentTarget.alt = catName
-                break
-            default:
-                e.currentTarget.src = '/stubimg/notfound.png'
-                e.currentTarget.srcset = '/stubimg/notfound.png'
-                e.currentTarget.alt = 'not found'
-                break
-        }
-    }
-
 
     // Добавление товара в корзину
     function handleClickAddToCart({ id, title, price, totalPrice, image, quantity = 1 }: IProductAction) {
@@ -106,7 +69,7 @@ export default function ProductsMarkup({ product }: ISearchMarkUp) {
             <div key={product.id} className="flex flex-col items-center mb-10 justify-between">
                 <div className="w-full overflow-hidden">
                     <Link className="" href={`/product/${product.id}`}>
-                        <Image width={300} height={300} priority={true} loader={({width}) => `${product.images[0]}?w=${width}`}  className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onLoad={(e) => hanlerOnLoadImage(e)} onError={(e) => hanlerOnErrorImage(e)} alt={product.title} />
+                        <Image width={300} height={300} priority={true} loader={({width}) => `${product.images[0]}?w=${width}`}  className="w-full h-64 object-cover transition-all hover:scale-[1.1]" src={product.images[0]} onError={(e) => hanlerOnErrorImage(e)} alt={product.title} />
                     </Link>
                 </div>
                 <div className='flex flex-col'>

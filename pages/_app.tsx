@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
       }
 
       if( url.includes('search') ) {
-        setLoaderComponent( <LoadingProduct/> )
+        setLoaderComponent( <LoadingCategory/> )
       }
     });
 
