@@ -12,32 +12,28 @@ import { SyntheticEvent } from "react"
 export default function Home({ categories, error }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter()
 
-  function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
-    const catName = e.currentTarget.alt.toLocaleLowerCase()
+  function hanlerSetImage(category: string) {
+    let catName = category.toLowerCase()
 
-    e.currentTarget.srcset = '/stubimg/notfound.png'
-    e.currentTarget.src = '/stubimg/notfound.png'
-    e.currentTarget.alt = 'not found'
 
     switch (catName) {
       case 'clothes':
-        e.currentTarget.src = '/stubimg/clothes.jpg'
+        return '/stubimg/clothes.jpg'
         break
       case 'electronics':
-        e.currentTarget.src = '/stubimg/electronics.jpg'
+        return '/stubimg/electronics.jpg'
         break
       case 'furniture':
-        e.currentTarget.src = '/stubimg/furniture.jpg'
+        return '/stubimg/furniture.jpg'
         break
       case 'shoes':
-        e.currentTarget.src = '/stubimg/shoes.jpg'
+        return '/stubimg/shoes.jpg'
         break
       case 'others':
-        e.currentTarget.src = '/stubimg/others.jpg'
+        return '/stubimg/others.jpg'
         break
       default:
-        e.currentTarget.src = '/stubimg/notfound.png'
-        e.currentTarget.alt = 'not found'
+        return 'stubimg/clothes.jpg'
         break
     }
   }
@@ -62,7 +58,7 @@ export default function Home({ categories, error }: InferGetStaticPropsType<type
                   return <div key={cat.id} className="basis-full sm:basis-full md:basis-1/2 p-1 mt-8 sm:mt-5">
                     <Link aria-label={cat.name} href={`/category/${cat.id}/0?sortBy=default`} className="uppercase text-sm extra-sm:text-lg">{cat.name}</Link>
                     <div className="w-full flex overflow-hidden h-64">
-                      <Link aria-label={cat.name} className="relative hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/0?sortBy=default`}><Image unoptimized={true} priority={true} fill={true} className="object-cover" src={cat.image ? cat.image : '/stubimg/notfound.png'} onError={(e) => hanlerOnErrorImage(e)} alt={cat.name} /></Link>
+                      <Link aria-label={cat.name} className="relative hover:scale-[1.1] w-full transition-all" href={`/category/${cat.id}/0?sortBy=default`}><Image unoptimized={true} priority={true} fill={true} className="object-cover" src={`${hanlerSetImage(cat.name)}`} alt={cat.name} /></Link>
                     </div>
                   </div>
                 }

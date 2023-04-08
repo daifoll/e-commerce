@@ -83,28 +83,72 @@ export default function Cart() {
     function hanlerOnErrorImage(e: SyntheticEvent<HTMLImageElement>) {
         const catName = e.currentTarget.alt.toLocaleLowerCase()
 
-        e.currentTarget.srcset = '/stubimg/notfound.png'
-        e.currentTarget.src = '/stubimg/notfound.png'
-        e.currentTarget.alt = 'not found'
-
         switch (catName) {
             case 'clothes':
                 e.currentTarget.src = '/stubimg/clothes.jpg'
+                e.currentTarget.srcset = '/stubimg/clothes.jpg'
+                e.currentTarget.alt = catName
                 break
             case 'electronics':
                 e.currentTarget.src = '/stubimg/electronics.jpg'
+                e.currentTarget.srcset = '/stubimg/electronics.jpg'
+                e.currentTarget.alt = catName
                 break
             case 'furniture':
                 e.currentTarget.src = '/stubimg/furniture.jpg'
+                e.currentTarget.srcset = '/stubimg/furniture.jpg'
+                e.currentTarget.alt = catName
                 break
             case 'shoes':
                 e.currentTarget.src = '/stubimg/shoes.jpg'
+                e.currentTarget.srcset = '/stubimg/shoes.jpg'
+                e.currentTarget.alt = catName
                 break
             case 'others':
                 e.currentTarget.src = '/stubimg/others.jpg'
+                e.currentTarget.srcset = '/stubimg/others.jpg'
+                e.currentTarget.alt = catName
                 break
             default:
                 e.currentTarget.src = '/stubimg/notfound.png'
+                e.currentTarget.srcset = '/stubimg/notfound.png'
+                e.currentTarget.alt = 'not found'
+                break
+        }
+    }
+
+    function hanlerOnLoadImage(e: SyntheticEvent<HTMLImageElement>) {
+        const catName = e.currentTarget.alt.toLocaleLowerCase()
+        console.log(catName)
+        switch (catName) {
+            case 'clothes':
+                e.currentTarget.src = '/stubimg/clothes.jpg'
+                e.currentTarget.srcset = '/stubimg/clothes.jpg'
+                e.currentTarget.alt = catName
+                break
+            case 'electronics':
+                e.currentTarget.src = '/stubimg/electronics.jpg'
+                e.currentTarget.srcset = '/stubimg/electronics.jpg'
+                e.currentTarget.alt = catName
+                break
+            case 'furniture':
+                e.currentTarget.src = '/stubimg/furniture.jpg'
+                e.currentTarget.srcset = '/stubimg/furniture.jpg'
+                e.currentTarget.alt = catName
+                break
+            case 'shoes':
+                e.currentTarget.src = '/stubimg/shoes.jpg'
+                e.currentTarget.srcset = '/stubimg/shoes.jpg'
+                e.currentTarget.alt = catName
+                break
+            case 'others':
+                e.currentTarget.src = '/stubimg/others.jpg'
+                e.currentTarget.srcset = '/stubimg/others.jpg'
+                e.currentTarget.alt = catName
+                break
+            default:
+                e.currentTarget.src = '/stubimg/notfound.png'
+                e.currentTarget.srcset = '/stubimg/notfound.png'
                 e.currentTarget.alt = 'not found'
                 break
         }
@@ -128,7 +172,7 @@ export default function Cart() {
                                         <li key={product.id + new Date().getDate()}>
                                             <div className="flex flex-col sm:flex-row bg-green-200 p-5 mb-3 rounded-2xl">
                                                 <div className="w-full h-32 sm:h-auto sm:w-40">
-                                                    <Image width={300} height={300} priority={true} loader={({ width }) => `${product.image}?w=${width}`} className="w-full h-full object-cover" src={product.image} onError={(e) => hanlerOnErrorImage(e)} alt={product.title} />
+                                                    <Image width={300} height={300} priority={true} loader={({ width }) => `${product.image}?w=${width}`} className="w-full h-full object-cover" src={product.image} onLoad={(e) => hanlerOnLoadImage(e)} onError={(e) => hanlerOnErrorImage(e)} alt={product.title} />
                                                 </div>
                                                 <div className="ml-0 sm:ml-6 mt-3 sm:mt-0">
                                                     <p className="text-xl md:text-2xl"><Link aria-label={product.title} href={`/product/${product.id}`}>{product.title}</Link></p>
