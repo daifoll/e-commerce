@@ -36,6 +36,10 @@ export default function App({ Component, pageProps }: AppProps) {
       if( url.includes('cart') ) {
         setLoaderComponent( <LoadingCart/> )
       }
+
+      if( url.includes('search') ) {
+        setLoaderComponent( <LoadingProduct/> )
+      }
     });
 
     Router.events.on("routeChangeComplete", (url) => {
